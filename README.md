@@ -109,27 +109,110 @@ Revenue Improvement
 ---
 
 ## 5. Data Schema
+---
+###  fact_booking_finish
 
-### fact_bookings
+ตารางหลักสำหรับเก็บข้อมูลการจอง (Transaction Table)
 
-* booking_id
-* guest_id
-* channel_id
-* booking_date
-* checkin_date
-* room_rate
-* rate_code
+| Column Name  | Description                         |
+| ------------ | ----------------------------------- |
+| booking_id   | รหัสการจอง                          |
+| guest_id     | รหัสลูกค้า (FK)                     |
+| channel_id   | รหัสช่องทางการจอง (FK)              |
+| booking_date | วันที่ทำการจอง                      |
+| checkin_date | วันที่เข้าพัก                       |
+| room_rate    | ราคาห้องต่อคืน                      |
+| rate_code    | ประเภทเรทราคา (Promo / Rack)        |
+| room_nights  | จำนวนคืนที่เข้าพัก                  |
+| revenue      | รายได้รวม (room_rate × room_nights) |
 
-### dim_channels
+---
 
-* channel_id
-* channel_name
-* commission_rate
+###  dim_channels
 
-### dim_guests
+ตารางข้อมูลช่องทางการจอง
 
-* guest_id
-* segment
+| Column Name     | Description                                   |
+| --------------- | --------------------------------------------- |
+| channel_id      | รหัสช่องทาง                                   |
+| channel_name    | ชื่อช่องทาง (Direct, Agoda, Booking, Expedia) |
+| commission_rate | อัตราค่าคอมมิชชั่น (%)                        |
+
+---
+
+###  dim_guests
+
+ตารางข้อมูลลูกค้า
+
+| Column Name | Description                           |
+| ----------- | ------------------------------------- |
+| guest_id    | รหัสลูกค้า                            |
+| segment     | ประเภทลูกค้า (Leisure, Business, VIP) |
+
+---
+
+###  dim_rate_code
+
+ตารางประเภทเรทราคา
+
+| Column Name | Description           |
+| ----------- | --------------------- |
+| rate_code   | รหัสเรทราคา           |
+| rate_type   | ประเภท (Promo / Rack) |
+
+---
+
+###  dim_date
+
+ตารางวันที่ (ใช้สำหรับวิเคราะห์เวลา)
+
+| Column Name | Description        |
+| ----------- | ------------------ |
+| date        | วันที่             |
+| month       | เดือน              |
+| year        | ปี                 |
+| day_of_week | วันในสัปดาห์       |
+| is_weekend  | เป็นวันหยุดหรือไม่ |
+
+---
+
+###  dim_demand_level (Derived)
+
+ตารางที่สร้างจากเงื่อนไข (Derived Dimension)
+
+| Column Name  | Description                  |
+| ------------ | ---------------------------- |
+| demand_level | ระดับ Demand (High / Low)    |
+| logic        | คำนวณจากจำนวน booking ต่อวัน |
+
+ตัวอย่างเงื่อนไข:
+
+```sql id="xq4n7m"
+CASE 
+  WHEN booking_count_per_day > threshold THEN 'High Demand'
+  ELSE 'Low Demand'
+END
+```
+
+---
+
+##  Relationships (ความสัมพันธ์)
+
+* fact_booking_finish.guest_id → dim_guests.guest_id
+* fact_booking_finish.channel_id → dim_channels.channel_id
+* fact_booking_finish.rate_code → dim_rate_code.rate_code
+* fact_booking_finish.checkin_date → dim_date.date
+
+---
+
+###หมายเหตุ
+
+* ตาราง fact_booking_finish เป็นศูนย์กลางของการวิเคราะห์ (Star Schema)
+* ตาราง dim_* ใช้สำหรับอธิบายมิติข้อมูล (Dimensions)
+* demand_level เป็น Derived Field ที่สร้างจาก logic ทางธุรกิจ
+
+---
+
 
 ---
 
