@@ -1,4 +1,4 @@
-# 📊 การเพิ่มประสิทธิภาพรายได้โรงแรม (ADR Optimization - Azure Stay)
+#  การเพิ่มประสิทธิภาพรายได้โรงแรม (ADR Optimization - Azure Stay)
 
 ##  Background & Pain Points
 
