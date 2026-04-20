@@ -1,142 +1,210 @@
-# Hotel Revenue Optimization: Increasing ADR by 10%
+# 📊 การเพิ่มประสิทธิภาพรายได้โรงแรม (ADR Optimization - Azure Stay)
 
-## Project Overview
+## 📌 Background & Pain Points
 
-This project aims to increase the **Average Daily Rate (ADR)** by **10% within 6 months** by analyzing booking data, focusing on **Booking Channels** and **Rate Codes**.
+แม้ว่าโรงแรม Azure Stay จะมีอัตราการเข้าพัก (Occupancy Rate) อยู่ในระดับที่ดี แต่พบว่า **Revenue Per Available Room (RevPAR)** ยังต่ำกว่าคู่แข่งในตลาด ซึ่งสะท้อนถึงปัญหาด้าน **กลยุทธ์การตั้งราคา (Pricing Strategy)** และ **การบริหารช่องทางการขาย (Channel Management)**
 
-The main goal is to optimize pricing strategy by:
+ปัญหาหลักเกิดจากการใช้ **ราคาส่งเสริมการขาย (Promotional Rate)** มากเกินไป โดยเฉพาะในช่วงที่มีความต้องการสูง (High Demand) ส่งผลให้โรงแรมไม่สามารถสร้างรายได้สูงสุดจากลูกค้าที่มีศักยภาพในการจ่ายในราคาเต็ม (**Rack Rate**)
 
-* Reducing excessive promotional room sales during high-demand periods
-* Increasing the proportion of full-price (**Rack Rate**) bookings
-* Targeting high-value customers from the most profitable channels
+นอกจากนี้ โรงแรมยังขาดการใช้ข้อมูลในการวิเคราะห์เพื่อเลือก:
 
----
+* ขาย “ห้องแบบไหน”
+* ผ่าน “ช่องทางใด”
+* ให้กับ “ลูกค้ากลุ่มไหน”
+* ใน “ช่วงเวลาใด”
 
-## Objectives
+จึงเกิดปัญหา **Revenue Leakage** หรือการสูญเสียรายได้ที่ควรจะได้รับ แม้ว่าจะมี Demand อยู่แล้วก็ตาม
 
-* Increase ADR by 10% within 6 months
-* Identify inefficiencies in current pricing and promotion strategies
-* Improve revenue performance by optimizing customer segmentation and booking channels
+### 🔥 Pain Points หลัก:
 
----
+* ใช้ Promo มากเกินไปในช่วง High Demand
+* สัดส่วน Rack Rate ต่ำเกินไป
+* Channel และ Pricing Strategy ไม่มีประสิทธิภาพ
 
-##  Hypotheses
+### 🎯 ผลกระทบทางธุรกิจ:
 
-###  Question 1
-
-**Are we losing potential full-price revenue by offering too many promotions during high-demand periods?**
-
-> Hypothesis:
-> During high-demand periods, the proportion of promotional bookings is too high, leading to a lower ADR than expected.
+* ADR และ RevPAR ต่ำกว่าคู่แข่ง
+* สูญเสียโอกาสในการขายในราคาสูง
+* ไม่สามารถ maximize รายได้จาก demand ที่มีอยู่
 
 ---
 
-###  Question 2
+## 🎯 SMART Objectives
 
-**Which booking channels bring in the highest value guests?**
+* **Specific**: วิเคราะห์ Booking Channel และ Rate Code เพื่อเพิ่มประสิทธิภาพการตั้งราคา
+* **Measurable**: เพิ่ม ADR อย่างน้อย 10%
+* **Achievable**: ใช้ข้อมูล booking ที่มีอยู่แล้ว
+* **Relevant**: แก้ปัญหา Revenue Leakage และ Pricing Inefficiency
+* **Time-bound**: ภายใน 6 เดือน
 
-> Hypothesis:
-> Certain booking channels (e.g., Direct Booking) generate higher ADR compared to others (e.g., OTA platforms).
+### ✅ Goal:
 
----
+เพิ่ม **Average Daily Rate (ADR)** ขึ้น **10% ภายใน 6 เดือน** โดย:
 
-###  Question 3
-
-**Does the booking lead time affect the selling price?**
-
-> Hypothesis:
-> Bookings made closer to the check-in date tend to have higher ADR compared to early bookings.
-
----
-
-##  Dataset Description
-
-The dataset includes hotel booking data with the following key attributes:
-
-* Booking Date
-* Check-in Date
-* Room Rate
-* Rate Code (Promo / Rack Rate)
-* Booking Channel
-* Customer Information
+* ลดสัดส่วนการขายแบบ Promotion ในช่วง High Demand
+* เพิ่มสัดส่วนลูกค้า Rack Rate
+* ปรับ Channel Mix ให้เหมาะสม
 
 ---
 
-##  Methodology
+## 🧠 Hypotheses & Method
 
-### 1. Data Preparation
+### 🔍 Hypothesis 1
 
-* Clean missing or inconsistent data
-* Convert date fields into proper formats
-* Calculate derived metrics such as Lead Time
+ในช่วง High Demand มีการใช้ Promotion มากเกินไป ทำให้ ADR ต่ำกว่าที่ควรจะเป็น
 
 ---
 
-### 2. Key Metrics
+### 🔍 Hypothesis 2
 
-####  Average Daily Rate (ADR)
-
-ADR = Total Room Revenue / Total Rooms Sold
-
-####  Cancellation Rate (if applicable)
-
-Cancellation Rate = Cancelled Bookings / Total Bookings
+ช่องทางการจองบางประเภท (เช่น Direct Booking) ให้ ADR สูงกว่าช่องทางอื่น
 
 ---
 
-### 3. Analysis Approach
+### 🔍 Hypothesis 3
 
-####  Hypothesis 1 Analysis
-
-* Segment data into **High Demand vs Low Demand periods**
-* Compare:
-
-  * % Promo vs Rack Rate
-  * ADR difference
-* Identify revenue loss opportunities
+ลูกค้าที่จองใกล้วันเข้าพัก (Short Lead Time) มีแนวโน้มจ่ายราคาสูงกว่า
 
 ---
 
-####  Hypothesis 2 Analysis
+## 📐 Measures (ตัวชี้วัด)
 
-* Group data by **Booking Channel**
-* Calculate ADR per channel
-* Identify **High Value Channels**
+### 📌 1. ADR (Average Daily Rate)
 
----
-
-####  Hypothesis 3 Analysis
-
-* Calculate **Lead Time = Check-in Date - Booking Date**
-* Segment into:
-
-  * Short Lead Time
-  * Medium Lead Time
-  * Long Lead Time
-* Compare ADR across segments
+ADR = รายได้รวม / จำนวนห้องที่ขายได้
 
 ---
 
-##  Expected Outcomes
+### 📌 2. Net Revenue
 
-* Identification of overuse of promotions during high-demand periods
-* Clear ranking of booking channels based on revenue contribution
-* Insight into pricing strategy based on booking timing
+Net Revenue = รายได้รวม - ค่าคอมมิชชั่น
 
 ---
 
-##  Business Recommendations
+### 📌 3. Net ADR
 
-* Limit promotional rate usage during high-demand periods
-* Prioritize high-performing booking channels
-* Implement dynamic pricing based on lead time
-* Increase focus on Rack Rate customers
+Net ADR = (รายได้รวม - ค่าคอมมิชชั่น) / จำนวนห้องที่ขายได้
 
 ---
 
-##  Project Structure
+### 📌 4. Promotion Ratio
 
+Promotion Ratio = จำนวนการจองแบบ Promo / จำนวนการจองทั้งหมด
+
+---
+
+## 🧩 Dimensions (มิติข้อมูล)
+
+### 📌 1. Booking Channel
+
+* Direct
+* OTA (Agoda, Booking, Expedia)
+* Travel Agent
+
+---
+
+### 📌 2. Rate Code
+
+* Promo
+* Rack Rate
+
+---
+
+### 📌 3. Demand Level (Derived)
+
+```sql id="4z0h5q"
+CASE 
+  WHEN booking_count_per_day > threshold THEN 'High Demand'
+  ELSE 'Low Demand'
+END
 ```
+
+---
+
+### 📌 4. Lead Time (Derived)
+
+Lead Time = Check-in Date - Booking Date
+
+---
+
+## ⚙️ Methodology
+
+1. เตรียมข้อมูล (Data Cleaning)
+2. สร้าง Derived Fields (Demand Level, Lead Time)
+3. คำนวณ Metrics (ADR, Net ADR, Promotion Ratio)
+4. วิเคราะห์ตาม Hypothesis
+5. สรุป Insight และ Recommendation
+
+---
+
+## 📊 Expected Insights
+
+* พบการใช้ Promotion สูงเกินไปในช่วง High Demand
+* Channel บางประเภทให้รายได้สูงกว่า
+* Lead Time มีผลต่อพฤติกรรมราคา
+
+---
+
+## 🚀 Business Recommendations
+
+* จำกัดการใช้ Promotion ในช่วง High Demand
+* เพิ่มสัดส่วน Rack Rate
+* เน้นช่องทางที่ให้ ADR สูง (เช่น Direct Booking)
+* ใช้ Dynamic Pricing ตาม Lead Time
+
+---
+
+## 🤖 AI Data Generation
+
+### 📌 Prompt ที่ใช้สร้างข้อมูล
+
+> สร้างชุดข้อมูลการจองโรงแรม โดยมี schema ดังนี้:
+
+* fact_bookings (booking_id, guest_id, channel_id, booking_date, checkin_date, room_rate, rate_code)
+* dim_channels (channel_id, channel_name, commission_rate)
+* dim_guests (guest_id, segment)
+
+เงื่อนไข:
+
+* OTA มีจำนวน booking สูงและ commission สูง
+* Direct มี commission = 0
+* มีทั้ง Promo และ Rack Rate
+* มีช่วง High Demand และ Low Demand
+
+---
+
+## 🗂️ Data Schema
+
+### 📌 fact_bookings
+
+* booking_id
+* guest_id
+* channel_id
+* booking_date
+* checkin_date
+* room_rate
+* rate_code
+
+---
+
+### 📌 dim_channels
+
+* channel_id
+* channel_name
+* commission_rate
+
+---
+
+### 📌 dim_guests
+
+* guest_id
+* segment
+
+---
+
+## 💻 Project Structure
+
+```id="c6q9xb"
 project/
 │
 ├── data/
@@ -145,46 +213,40 @@ project/
 ├── scripts/
 │   ├── data_cleaning.sql
 │   ├── analysis.sql
-│   └── analysis.py
 │
 ├── results/
-│   ├── adr_by_channel.png
-│   ├── promo_vs_rack.png
-│   └── lead_time_analysis.png
+│   ├── adr_analysis.png
+│   ├── channel_analysis.png
+│   └── promo_analysis.png
 │
 └── README.md
 ```
 
 ---
 
-##  Tools & Technologies
+## 🔄 GitHub Documentation
 
-* SQL (PostgreSQL / MySQL)
-* Python (Pandas, Matplotlib)
-* Excel (optional)
-* GitHub for version control
-
----
-
-##  Version Control (GitHub)
-
-* Initial dataset upload
-* Data cleaning process
-* Hypothesis testing scripts
-* Final analysis and README update
+* README อธิบายครบ
+* มี dataset (AI-generated)
+* มี SQL / Python scripts
+* โครงสร้างไฟล์ชัดเจน
+* มี commit แสดงพัฒนา
+* ตั้งเป็น Public Repository
 
 ---
 
-##  Repository Access
+## 📌 Conclusion
 
-This repository is set to **Public** for evaluation purposes.
+แม้โรงแรมจะมี Demand สูง แต่การใช้ Promotion มากเกินไปและการเลือก Channel ที่ไม่เหมาะสม ทำให้สูญเสียรายได้ที่ควรจะได้รับ
+
+การปรับกลยุทธ์ด้าน Pricing และ Channel จะช่วยเพิ่ม ADR และทำให้โรงแรมสามารถบรรลุเป้าหมาย **เพิ่มรายได้ 10% ภายใน 6 เดือน** ได้
 
 ---
 
-##  Conclusion
+## 📈 Future Improvements
 
-This project demonstrates how data-driven analysis can improve hotel revenue by optimizing pricing strategies, reducing unnecessary promotions, and focusing on high-value customer segments.
-
-The insights from this analysis can directly support business decisions to achieve a **10% increase in ADR within 6 months**.
+* ใช้ Machine Learning เพื่อทำนาย Demand
+* พัฒนา Dynamic Pricing แบบอัตโนมัติ
+* สร้าง Dashboard สำหรับติดตามผลแบบ Real-time
 
 ---
