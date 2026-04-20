@@ -1,6 +1,6 @@
-# 📊 Hotel Revenue Optimization: Increasing ADR by 10%
+# Hotel Revenue Optimization: Increasing ADR by 10%
 
-## 📌 Project Overview
+## Project Overview
 
 This project aims to increase the **Average Daily Rate (ADR)** by **10% within 6 months** by analyzing booking data, focusing on **Booking Channels** and **Rate Codes**.
 
@@ -12,7 +12,7 @@ The main goal is to optimize pricing strategy by:
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 * Increase ADR by 10% within 6 months
 * Identify inefficiencies in current pricing and promotion strategies
@@ -20,9 +20,9 @@ The main goal is to optimize pricing strategy by:
 
 ---
 
-## 🧠 Hypotheses
+##  Hypotheses
 
-### 🔍 Question 1
+###  Question 1
 
 **Are we losing potential full-price revenue by offering too many promotions during high-demand periods?**
 
@@ -31,7 +31,7 @@ The main goal is to optimize pricing strategy by:
 
 ---
 
-### 🔍 Question 2
+###  Question 2
 
 **Which booking channels bring in the highest value guests?**
 
@@ -40,7 +40,7 @@ The main goal is to optimize pricing strategy by:
 
 ---
 
-### 🔍 Question 3
+###  Question 3
 
 **Does the booking lead time affect the selling price?**
 
@@ -49,7 +49,7 @@ The main goal is to optimize pricing strategy by:
 
 ---
 
-## 🗂️ Dataset Description
+##  Dataset Description
 
 The dataset includes hotel booking data with the following key attributes:
 
@@ -62,7 +62,7 @@ The dataset includes hotel booking data with the following key attributes:
 
 ---
 
-## ⚙️ Methodology
+##  Methodology
 
 ### 1. Data Preparation
 
@@ -74,11 +74,11 @@ The dataset includes hotel booking data with the following key attributes:
 
 ### 2. Key Metrics
 
-#### 📌 Average Daily Rate (ADR)
+####  Average Daily Rate (ADR)
 
 ADR = Total Room Revenue / Total Rooms Sold
 
-#### 📌 Cancellation Rate (if applicable)
+####  Cancellation Rate (if applicable)
 
 Cancellation Rate = Cancelled Bookings / Total Bookings
 
@@ -86,7 +86,7 @@ Cancellation Rate = Cancelled Bookings / Total Bookings
 
 ### 3. Analysis Approach
 
-#### 🔹 Hypothesis 1 Analysis
+####  Hypothesis 1 Analysis
 
 * Segment data into **High Demand vs Low Demand periods**
 * Compare:
@@ -97,7 +97,7 @@ Cancellation Rate = Cancelled Bookings / Total Bookings
 
 ---
 
-#### 🔹 Hypothesis 2 Analysis
+####  Hypothesis 2 Analysis
 
 * Group data by **Booking Channel**
 * Calculate ADR per channel
@@ -105,7 +105,7 @@ Cancellation Rate = Cancelled Bookings / Total Bookings
 
 ---
 
-#### 🔹 Hypothesis 3 Analysis
+####  Hypothesis 3 Analysis
 
 * Calculate **Lead Time = Check-in Date - Booking Date**
 * Segment into:
@@ -117,7 +117,7 @@ Cancellation Rate = Cancelled Bookings / Total Bookings
 
 ---
 
-## 📊 Expected Outcomes
+##  Expected Outcomes
 
 * Identification of overuse of promotions during high-demand periods
 * Clear ranking of booking channels based on revenue contribution
@@ -125,7 +125,7 @@ Cancellation Rate = Cancelled Bookings / Total Bookings
 
 ---
 
-## 🚀 Business Recommendations
+##  Business Recommendations
 
 * Limit promotional rate usage during high-demand periods
 * Prioritize high-performing booking channels
@@ -134,7 +134,7 @@ Cancellation Rate = Cancelled Bookings / Total Bookings
 
 ---
 
-## 🗃️ Project Structure
+##  Project Structure
 
 ```
 project/
@@ -157,7 +157,7 @@ project/
 
 ---
 
-## 💻 Tools & Technologies
+##  Tools & Technologies
 
 * SQL (PostgreSQL / MySQL)
 * Python (Pandas, Matplotlib)
@@ -166,7 +166,7 @@ project/
 
 ---
 
-## 🔄 Version Control (GitHub)
+##  Version Control (GitHub)
 
 * Initial dataset upload
 * Data cleaning process
@@ -175,13 +175,13 @@ project/
 
 ---
 
-## 🌍 Repository Access
+##  Repository Access
 
 This repository is set to **Public** for evaluation purposes.
 
 ---
 
-## 📌 Conclusion
+##  Conclusion
 
 This project demonstrates how data-driven analysis can improve hotel revenue by optimizing pricing strategies, reducing unnecessary promotions, and focusing on high-value customer segments.
 
