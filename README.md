@@ -141,7 +141,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 fact_booking_finish (hotel_processed_data)
+###  fact_booking_finish (hotel_processed_data)
 
 ตารางหลักสำหรับเก็บข้อมูลการจองและใช้ในการวิเคราะห์ทั้งหมด
 
@@ -159,7 +159,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_channels
+###  dim_channels
 
 ข้อมูลช่องทางการจอง
 
@@ -172,7 +172,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_rate_codes
+###  dim_rate_codes
 
 ข้อมูลประเภทเรทราคา
 
@@ -184,7 +184,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_room_types
+###  dim_room_types
 
 ข้อมูลประเภทห้องพัก
 
@@ -195,7 +195,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_room_inventory
+###  dim_room_inventory
 
 ข้อมูลจำนวนห้องที่มีในระบบ
 
@@ -206,7 +206,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_calendar
+###  dim_calendar
 
 ข้อมูลวันที่สำหรับการวิเคราะห์เวลา
 
@@ -220,7 +220,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_hotel_derived_features (Derived Table)
+###  dim_hotel_derived_features (Derived Table)
 
 ตารางที่สร้างจากการคำนวณเพื่อใช้ในการวิเคราะห์
 
@@ -232,7 +232,7 @@ Revenue Improvement
 
 ---
 
-## 🔹 Derived Definitions
+##  Derived Definitions
 
 ### Lead Time
 
