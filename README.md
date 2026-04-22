@@ -11,6 +11,8 @@
 
 ---
 
+# 0. Data Analytics Project Canvas
+
 <img width="1920" height="1080" alt="Project Canvas pptx" src="https://github.com/user-attachments/assets/6067512e-00ba-4672-a4e1-63f8137b8606" />
 
 ---
