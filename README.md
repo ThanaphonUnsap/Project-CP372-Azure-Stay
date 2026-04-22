@@ -356,27 +356,20 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 
 ## 7. Findings (Insights)
 
-### 1. Inefficient Use of Promotions During Peak Demand
+### 1. Peak Demand ยังถูกกัดด้วย Non-Rack Rate
+วันศุกร์–เสาร์มี Non-Rack Rate ~31% ซึ่งไม่ต่างจาก Weekday อย่างมีนัยสำคัญ แสดงว่า Rate Restriction Policy สำหรับ Peak Period ยังขาดอยู่ การปิดโปรโมชันในช่วงดังกล่าวสามารถเพิ่ม ADR ได้ทันทีโดยไม่กระทบ Occupancy
 
-ในช่วง Peak Demand (วันศุกร์–เสาร์) โรงแรมยังคงมีการขายห้องพักในรูปแบบ Promotion ประมาณ 30%
-ทั้งที่มีความต้องการสูง ส่งผลให้สูญเสียโอกาสในการขายในราคาเต็ม (Rack Rate) และทำให้รายได้ไม่ถูก maximize ตามศักยภาพ
+### 2. Non-Rack Rate คิดเป็น 61.9% ของยอดจอง — Revenue Dilution ระดับ Portfolio
+ปัญหาไม่ใช่แค่วันหยุดสุดสัปดาห์ แต่เป็น Structural Issue ทั้ง Portfolio ควร Review Rate Availability ในทุก Segment และตั้ง Minimum Rack Rate Contribution เป้าหมายไว้ที่ ≥50%่
 
----
+### 3. OTA สร้าง Volume แต่ Net ADR ต่ำกว่า Direct เฉลี่ย ~15–18%
+Booking.com และ Expedia นำส่งยอดจองสูงสุด แต่ Net ADR หลังหัก Commission ต่ำกว่า Direct Web — ควรลงทุนใน Direct Channel (Loyalty Program, Website Rate Parity) เพื่อ Shift 10–15% ของ OTA Booking มาเป็น Direct
 
-### 2. High Volume Does Not Equal High Profitability
+### 4. Last-Minute Pricing ไม่สะท้อน Scarcity — ADR ต่ำกว่าที่ควร
+ลูกค้าที่จองใน 7 วันสุดท้ายได้ ADR ต่ำกว่ากลุ่มจองล่วงหน้า 8–14 วัน ซึ่งตรงข้ามกับ Dynamic Pricing Principle ควรตั้ง Last-Minute Rate Rule ที่ปรับราคาขึ้นอัตโนมัติเมื่อ Occupancy เกิน 70% และ Booking Window น้อยกว่า 7 วัน
 
-ช่องทาง Booking.com สามารถสร้างจำนวนการจองได้สูงที่สุด
-แต่เมื่อหักค่าคอมมิชชั่นประมาณ 15% แล้ว พบว่า Net ADR ต่ำกว่าช่องทาง Direct Web อย่างมีนัยสำคัญ
-สะท้อนให้เห็นว่าช่องทางที่มียอดจองสูง ไม่ได้หมายความว่าจะสร้างกำไรสูงเสมอไป
-
----
-
-### 3. Pricing Does Not Reflect Actual Demand
-
-ลูกค้าที่จองล่วงหน้า 14 วันขึ้นไป มักได้รับราคาที่ต่ำกว่าลูกค้าที่จองใกล้วันเข้าพัก
-แสดงให้เห็นว่าการตั้งราคายังไม่สอดคล้องกับระดับความต้องการ (Demand) ที่แท้จริง
-ซึ่งเป็นโอกาสในการนำกลยุทธ์ Dynamic Pricing มาใช้เพื่อเพิ่มรายได้
-
+### 5. Direct Web = High Value Channel ที่ยังถูก Underinvest
+Bubble Chart จะแสดงว่า Direct Web มี Net ADR สูงที่สุดและ Commission เป็น 0% แต่ Volume ยังต่ำกว่า OTA — นี่คือโอกาสสำคัญที่สุดในการเพิ่ม Net RevPAR
 ---
 
 ## 8. Recommendations
