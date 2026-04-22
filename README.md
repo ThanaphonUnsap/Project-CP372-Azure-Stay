@@ -351,30 +351,30 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 ## 6.EDA & Visualizations
 Data Quality Check
 ### 1. Changed Type (การปรับประเภทข้อมูล): มีการตั้งค่าว่าคอลัมน์ไหนเป็นตัวเลข (Number), ข้อความ (Text) หรือวันที่ (Date) เพื่อให้ระบบคำนวณได้ถูกต้อง "total_room_revenue
-Mean = 555.47
-Max = 1998.36
-Min = 0
-Median = 504"
+|Mean = 555.47|
+|Max = 1998.36|
+|Min = 0|
+|Median = 504"|
 ### 2. Removed Guest_id: คุณตัดสินใจลบคอลัมน์ไอดีของลูกค้าออก อาจเพราะไม่ได้ใช้ในการวิเคราะห์ หรือเพื่อความเป็นส่วนตัวของข้อมูล	"base_price
-Mean = 188.57
-Max = 260
-Min = 120
-Median = 170"
+|Mean = 188.57|
+|Max = 260|
+|Min = 120|
+|Median = 170"|
 ### 3. Replaced null to 0 (children count): จัดการค่าว่างในคอลัมน์จำนวนเด็ก โดยเปลี่ยนจาก null เป็น 0 เพื่อไม่ให้เกิด error เวลาเอาไปบวกเลข	"commission_rate
-Mean = 0.09
-Max = 0.18
-Min = 0
-Median = 0.10"
+|Mean = 0.09|
+|Max = 0.18|
+|Min = 0|
+|Median = 0.10|
 ### 4. Removed negative LOS: อันนี้สำคัญมาก! คุณทำการกรองเอาค่า Length of Stay (ระยะเวลาเข้าพัก) ที่เป็น ค่าลบ ออก ซึ่งน่าจะเป็นข้อมูลที่ผิดพลาด (เช่น วัน check-out มาก่อนวัน check-in)	"BLT_days
-Mean = 21.45
-Max = 53
-Min = 0
-Median = 21"
+|Mean = 21.45|
+|Max = 53|
+|Min = 0|
+|Median = 21|
 ### 5. Changed Total Room Revenue: ปรับแต่งคอลัมน์รายได้ห้องพัก (เช่น เปลี่ยนเป็นทศนิยม หรือหน่วยเงินตรา)	"LOS_nights
-Mean = 3.45
-Max = 14
-Min = 1
-Median = 3"
+|Mean = 3.45|
+|Max = 14|
+|Min = 1|
+|Median = 3|
 ### 6. Sorted Rows booking Id: จัดเรียงข้อมูลตามไอดีการจองเพื่อให้ดูง่ายขึ้น
 ### 7. Trimmed / Cleaned Text: ลบช่องว่างส่วนเกินที่หัว/ท้ายข้อความ และลบตัวอักษรที่พิมพ์ไม่ได้ (non-printable characters) ออก เพื่อป้องกันปัญหาเวลาเขียนสูตรแล้วหาคำไม่เจอ
 ### 8. Removed Guest_id: คุณตัดสินใจลบคอลัมน์ไอดีของลูกค้าออก อาจเพราะไม่ได้ใช้ในการวิเคราะห์ หรือเพื่อความเป็นส่วนตัวของข้อมูล
