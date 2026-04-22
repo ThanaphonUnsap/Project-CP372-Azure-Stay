@@ -349,7 +349,9 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 ---
 
 ## 6. EDA & Visualizations
-
+### Data Overview
+"Rows: 5318 แถว
+Columns: 29 คอลัมน์"
 ### Data Quality Check
 
 | # | Step | Description | Column Stats |
