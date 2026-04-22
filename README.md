@@ -1,7 +1,14 @@
 
-# การเพิ่มประสิทธิภาพรายได้โรงแรม (Azure Stay)
+# 🏨 Azure Stay Hotel การเพิ่มประสิทธิภาพรายได้โรงแรม 🏨
+
+---
+
+ปัญหา 2: ต้นทุนการกระจายสินค้าสูง (High Distribution Costs)
+
+---
 
 <img width="1920" height="1080" alt="Project Canvas pptx" src="https://github.com/user-attachments/assets/6067512e-00ba-4672-a4e1-63f8137b8606" />
+
 ---
 
 ## 1. Background & Pain Points
