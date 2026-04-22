@@ -120,7 +120,7 @@ Revenue Improvement
 
 ## 5. Data Schema
 ---
-###  fact_booking_finish
+###  fact_booking_finish แก้
 
 ตารางหลักสำหรับเก็บข้อมูลการจอง (Transaction Table)
 
@@ -138,7 +138,7 @@ Revenue Improvement
 
 ---
 
-###  dim_channels
+###  dim_calendar แก้
 
 ตารางข้อมูลช่องทางการจอง
 
@@ -150,7 +150,7 @@ Revenue Improvement
 
 ---
 
-###  dim_guests
+###  dim_channels แก้
 
 ตารางข้อมูลลูกค้า
 
@@ -161,7 +161,7 @@ Revenue Improvement
 
 ---
 
-###  dim_rate_code
+###  dim_rate_codes แก้
 
 ตารางประเภทเรทราคา
 
@@ -172,7 +172,7 @@ Revenue Improvement
 
 ---
 
-###  dim_date
+###  dim_room_inventory แก้
 
 ตารางวันที่ (ใช้สำหรับวิเคราะห์เวลา)
 
@@ -186,23 +186,17 @@ Revenue Improvement
 
 ---
 
-###  dim_demand_level (Derived)
+###  dim_room_types แก้
 
-ตารางที่สร้างจากเงื่อนไข (Derived Dimension)
+ตารางวันที่ (ใช้สำหรับวิเคราะห์เวลา)
 
-| Column Name  | Description                  |
-| ------------ | ---------------------------- |
-| demand_level | ระดับ Demand (High / Low)    |
-| logic        | คำนวณจากจำนวน booking ต่อวัน |
-
-ตัวอย่างเงื่อนไข:
-
-```sql id="xq4n7m"
-CASE 
-  WHEN booking_count_per_day > threshold THEN 'High Demand'
-  ELSE 'Low Demand'
-END
-```
+| Column Name | Description        |
+| ----------- | ------------------ |
+| date        | วันที่             |
+| month       | เดือน              |
+| year        | ปี                 |
+| day_of_week | วันในสัปดาห์       |
+| is_weekend  | เป็นวันหยุดหรือไม่ |
 
 ---
 
@@ -218,9 +212,11 @@ END
 | net_ADR | รายได้เฉลี่ยต่อคืนหลังหักค่าคอมมิชชั่น       |
 | lead_bin | กลุ่มระยะเวลาการจองล่วงหน้า (Booking Lead Time) เช่น 0-7 วัน, 8-14 วัน |
 
-ADR = “Average revenue earned per room-night”
-net_ADR = “True revenue per night after distribution costs”
-lead_bin = “Customer booking behavior segmentation by lead time”
+ADR = “Average revenue earned per room-night
+
+net_ADR = “True revenue per night after distribution costs
+
+lead_bin = “Customer booking behavior segmentation by lead time
 
 ---
 
