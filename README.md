@@ -348,39 +348,25 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 
 ---
 
-## 6.EDA & Visualizations
-Data Quality Check
-### 1. Changed Type (การปรับประเภทข้อมูล): มีการตั้งค่าว่าคอลัมน์ไหนเป็นตัวเลข (Number), ข้อความ (Text) หรือวันที่ (Date) เพื่อให้ระบบคำนวณได้ถูกต้อง "total_room_revenue
-|Mean = 555.47|
-|Max = 1998.36|
-|Min = 0|
-|Median = 504"|
-### 2. Removed Guest_id: คุณตัดสินใจลบคอลัมน์ไอดีของลูกค้าออก อาจเพราะไม่ได้ใช้ในการวิเคราะห์ หรือเพื่อความเป็นส่วนตัวของข้อมูล	"base_price
-|Mean = 188.57|
-|Max = 260|
-|Min = 120|
-|Median = 170"|
-### 3. Replaced null to 0 (children count): จัดการค่าว่างในคอลัมน์จำนวนเด็ก โดยเปลี่ยนจาก null เป็น 0 เพื่อไม่ให้เกิด error เวลาเอาไปบวกเลข	"commission_rate
-|Mean = 0.09|
-|Max = 0.18|
-|Min = 0|
-|Median = 0.10|
-### 4. Removed negative LOS: อันนี้สำคัญมาก! คุณทำการกรองเอาค่า Length of Stay (ระยะเวลาเข้าพัก) ที่เป็น ค่าลบ ออก ซึ่งน่าจะเป็นข้อมูลที่ผิดพลาด (เช่น วัน check-out มาก่อนวัน check-in)	"BLT_days
-|Mean = 21.45|
-|Max = 53|
-|Min = 0|
-|Median = 21|
-### 5. Changed Total Room Revenue: ปรับแต่งคอลัมน์รายได้ห้องพัก (เช่น เปลี่ยนเป็นทศนิยม หรือหน่วยเงินตรา)	"LOS_nights
-|Mean = 3.45|
-|Max = 14|
-|Min = 1|
-|Median = 3|
-### 6. Sorted Rows booking Id: จัดเรียงข้อมูลตามไอดีการจองเพื่อให้ดูง่ายขึ้น
-### 7. Trimmed / Cleaned Text: ลบช่องว่างส่วนเกินที่หัว/ท้ายข้อความ และลบตัวอักษรที่พิมพ์ไม่ได้ (non-printable characters) ออก เพื่อป้องกันปัญหาเวลาเขียนสูตรแล้วหาคำไม่เจอ
-### 8. Removed Guest_id: คุณตัดสินใจลบคอลัมน์ไอดีของลูกค้าออก อาจเพราะไม่ได้ใช้ในการวิเคราะห์ หรือเพื่อความเป็นส่วนตัวของข้อมูล
-### 9.สร้าง feature (weekday, weekend, rack rate)
-### 10.คำนวณ KPI (ADR, net ADR)
-### 11.จัดกลุ่ม lead time เพื่อเอาไปวิเคราะห์พฤติกรรมการจอ"
+## 6. EDA & Visualizations
+
+### Data Quality Check
+
+| # | Step | Description | Column Stats |
+|---|------|-------------|--------------|
+| 1 | **Changed Type** | ปรับประเภทข้อมูลของแต่ละคอลัมน์ให้ถูกต้อง — ตัวเลข (Number), ข้อความ (Text) หรือวันที่ (Date) เพื่อให้ระบบคำนวณได้ถูกต้อง | **`total_room_revenue`** <br>Mean = 555.47 \| Max = 1,998.36 \| Min = -1,836.00 \| Median = 504.00 |
+| 2 | **Removed `guest_id`** | ลบคอลัมน์ไอดีของลูกค้าออก เนื่องจากไม่ได้ใช้ในการวิเคราะห์ และเพื่อปกป้องความเป็นส่วนตัวของข้อมูล | **`base_price`** <br>Mean = 188.57 \| Max = 260.00 \| Min = 120.00 \| Median = 170.00 |
+| 3 | **Replaced null → 0 (`children_count`)** | เปลี่ยนค่าว่าง (null) ในคอลัมน์จำนวนเด็กเป็น 0 เพื่อป้องกัน error เวลานำไปคำนวณ | **`commission_rate`** <br>Mean = 0.09 \| Max = 0.18 \| Min = 0.00 \| Median = 0.10 |
+| 4 | **Removed negative LOS** | กรองแถวที่มีค่า Length of Stay ติดลบออก เนื่องจากเป็นข้อมูลที่ผิดพลาด (วัน check-out มาก่อนวัน check-in) ส่งผลให้ค่า Min ของ `total_room_revenue`, `ADR`, `net_revenue`, `net_ADR` ที่ติดลบหายไปหลัง clean | **`BLT_days`** <br>Mean = 21.45 \| Max = 53.00 \| Min = 0.00 \| Median = 21.00 |
+| 5 | **Changed `total_room_revenue`** | ปรับ format คอลัมน์รายได้ห้องพักให้เป็นทศนิยม 2 ตำแหน่ง และคำนวณใหม่จากสูตร `base_price × discount_factor × LOS_nights × number_of_rooms` | **`LOS_nights`** <br>Mean = 3.45 \| Max = 14.00 \| Min = 1.00 \| Median = 3.00 |
+| 6 | **Sorted rows by `booking_id`** | จัดเรียงข้อมูลจาก `RES-00001` ขึ้นไปตามลำดับ เพื่อให้อ่านและตรวจสอบข้อมูลได้ง่าย | **`discount_factor`** <br>Mean = 0.89 \| Max = 1.00 \| Min = 0.80 \| Median = 0.88 |
+| 7 | **Trimmed / Cleaned Text** | ลบช่องว่างส่วนเกินที่หัว/ท้ายข้อความ และลบ non-printable characters เพื่อป้องกันปัญหาเวลาใช้ filter หรือ VLOOKUP | **`number_of_rooms`** <br>Mean = 1.20 \| Max = 3.00 \| Min = 1.00 \| Median = 1.00 |
+| 8 | **Removed `guest_id`** (confirmed) | ยืนยันการลบคอลัมน์ `guest_id` ออกจาก dataset สุดท้าย | **`adults_count`** <br>Mean = 1.80 \| Max = 6.00 \| Min = 1.00 \| Median = 2.00 |
+| 9 | **Feature Engineering** | สร้างคอลัมน์ใหม่ 3 ตัว: `day_of_week` / `is_weekend` (True ถ้า Sat–Sun) / `is_rack` (True ถ้า `rate_code_id = RC_RACK`) | **`children_count`** <br>Mean = 0.51 \| Max = 6.00 \| Min = 0.00 \| Median = 0.00 |
+| 10 | **KPI Calculation** | คำนวณ KPI หลัก: `ADR = total_room_revenue / LOS_nights / number_of_rooms` และ `net_ADR = net_revenue / LOS_nights / number_of_rooms` | **`ADR`** <br>Mean = 160.00 \| Max = 622.20 \| Min = -306.00 \| Median = 168.00 <br><br> **`net_revenue`** <br>Mean = 502.96 \| Max = 1,638.66 \| Min = -1,836.00 \| Median = 456.10 <br><br> **`net_ADR`** <br>Mean = 144.91 \| Max = 558.27 \| Min = -306.00 \| Median = 149.60 |
+| 11 | **Lead Time Binning** | จัดกลุ่ม `BLT_days` เป็น 4 ช่วง (`lead_bin`) เพื่อวิเคราะห์พฤติกรรมการจอง: `0–7 days` / `8–14 days` / `15–30 days` / `31+ days` | **`BLT_days`** <br>Mean = 21.45 \| Max = 53.00 \| Min = 0.00 \| Median = 21.00 |
+
+> **Note:** ค่า Min ที่ติดลบใน `total_room_revenue`, `ADR`, `net_revenue` และ `net_ADR` คือค่าก่อนทำ Step 4 (Removed negative LOS) — หลังจาก clean แล้วค่าเหล่านี้จะถูกกำจัดออก
 
 ---
 
