@@ -369,7 +369,18 @@ Columns: 29 คอลัมน์"
 | 11 | **Lead Time Binning** | จัดกลุ่ม `BLT_days` เป็น 4 ช่วง (`lead_bin`) เพื่อวิเคราะห์พฤติกรรมการจอง: `0–7 days` / `8–14 days` / `15–30 days` / `31+ days` | **`BLT_days`** <br>Mean = 21.45 \| Max = 53.00 \| Min = 0.00 \| Median = 21.00 |
 
 > **Note:** ค่า Min ที่ติดลบใน `total_room_revenue`, `ADR`, `net_revenue` และ `net_ADR` คือค่าก่อนทำ Step 4 (Removed negative LOS) — หลังจาก clean แล้วค่าเหล่านี้จะถูกกำจัดออก
-
+---
+## CELL 1 : PAIN POINT 1 — ขาย Promo มากเกินไปในวัน High Demand
+กราฟ: Grouped Bar Chart — สัดส่วน Rack Rate vs Non-Rack Rate แยกตามวันในสัปดาห์ (เรียงจาก Mon → Sun)
+• เปรียบเทียบสัดส่วนการขาย Rack Rate และ Non-Rack Rate
+    ในแต่ละวันของสัปดาห์
+• วันศุกร์–เสาร์ (High Demand) ควรมีสัดส่วน Rack Rate สูงกว่าวันอื่น
+    แต่ถ้ายังมี Non-Rack Rate ~30% แสดงว่าโรงแรมปล่อยโปรโมชัน
+    มากเกินความจำเป็นในช่วงที่ควรเก็บราคาเต็ม
+เหตุผลที่เลือก : Grouped Bar เหมาะสมที่สุดสำหรับการเปรียบเทียบ 2 หมวดหมู่
+  (Rack vs Non-Rack) ข้าม 7 วัน — ทำให้เห็นความแตกต่างของแต่ละวัน
+  ได้ในมุมมองเดียว สื่อสารได้ชัดเจนกว่า Pie Chart หรือ Stacked Bar
+<Figure size 1200x600 with 1 Axes>
 ---
 
 # Section 4: Insights & Impact
