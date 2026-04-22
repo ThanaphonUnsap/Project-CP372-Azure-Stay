@@ -352,7 +352,7 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 
 ---
 
-Section 4: Insights & Impact
+# Section 4: Insights & Impact
 
 ## 7. Findings (Insights)
 
