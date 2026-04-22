@@ -371,7 +371,7 @@ Columns: 29 คอลัมน์"
 > **Note:** ค่า Min ที่ติดลบใน `total_room_revenue`, `ADR`, `net_revenue` และ `net_ADR` คือค่าก่อนทำ Step 4 (Removed negative LOS) — หลังจาก clean แล้วค่าเหล่านี้จะถูกกำจัดออก
 ---
 ## CELL 1 : PAIN POINT 1 — ขาย Promo มากเกินไปในวัน High Demand
-กราฟ: Grouped Bar Chart — สัดส่วน Rack Rate vs Non-Rack Rate แยกตามวันในสัปดาห์ (เรียงจาก Mon → Sun)
+กราฟ : Grouped Bar Chart — สัดส่วน Rack Rate vs Non-Rack Rate แยกตามวันในสัปดาห์ (เรียงจาก Mon → Sun)
 • เปรียบเทียบสัดส่วนการขาย Rack Rate และ Non-Rack Rate
     ในแต่ละวันของสัปดาห์
 • วันศุกร์–เสาร์ (High Demand) ควรมีสัดส่วน Rack Rate สูงกว่าวันอื่น
@@ -383,7 +383,7 @@ Columns: 29 คอลัมน์"
 <img width="1187" height="586" alt="image" src="https://github.com/user-attachments/assets/c04c13aa-6b58-48a5-adf0-a01d8aa819ae" />
 
 ## CELL 2 : PAIN POINT 2 — สัดส่วน Rack Rate โดยรวมต่ำกว่าที่ควร
-กราฟ: Donut Chart (Pie with hole) + Bar Chart เปรียบ ADR
+กราฟ : Donut Chart (Pie with hole) + Bar Chart เปรียบ ADR
 • Donut Chart แสดงสัดส่วน Rack Rate ต่อ Non-Rack Rate ทั้งหมด
     — หาก Non-Rack Rate เกิน 60% แสดงว่าโรงแรมปล่อยส่วนลดมากเกินไป
 • Bar Chart เปรียบ ADR เฉลี่ยของแต่ละ Rate Type
@@ -394,7 +394,7 @@ Columns: 29 คอลัมน์"
 <img width="1223" height="590" alt="image" src="https://github.com/user-attachments/assets/33bc8c4e-9e9e-435f-9dc5-3740605ca03d" />
 
 ## CELL 3 : PAIN POINT 3 — OTA ดึงรายได้หายไป 8.7%
-กราฟ: Grouped Bar Chart — Gross ADR vs Net ADR แต่ละ Channel พร้อมเส้นแสดง Commission Rate
+กราฟ : Grouped Bar Chart — Gross ADR vs Net ADR แต่ละ Channel พร้อมเส้นแสดง Commission Rate
 • แสดง ADR ก่อน (Gross) และหลัง (Net) หัก Commission ทุก Channel
 • ช่อง OTA เช่น Booking.com / Expedia มักมี Gross ADR สูง
     แต่พอหัก Commission ~15-18% แล้ว Net ADR อาจต่ำกว่า Direct
@@ -405,7 +405,7 @@ Columns: 29 คอลัมน์"
 <img width="1186" height="588" alt="image" src="https://github.com/user-attachments/assets/b3d80c52-cd1c-4b71-a0d4-1de1aaa0c400" />
 
 ## CELL 4 : PAIN POINT 4 — ไม่ได้ประโยชน์จากลูกค้าจองกระชั้น
-กราฟ: Bar Chart + Scatter Plot — ADR เฉลี่ยตามกลุ่ม Lead Time + แสดง Volume ประกอบ
+กราฟ : Bar Chart + Scatter Plot — ADR เฉลี่ยตามกลุ่ม Lead Time + แสดง Volume ประกอบ
 • ลูกค้าที่จองล่วงหน้า 0–7 วัน (Last-Minute) ควรจ่ายราคาสูงกว่า
     เพราะห้องเหลือน้อยและ Demand สูง — แต่ถ้า ADR กลับต่ำกว่า
     แสดงว่าระบบ Pricing ยังไม่ได้ใช้ Last-Minute Premium
@@ -416,7 +416,7 @@ Columns: 29 คอลัมน์"
 <img width="989" height="589" alt="image" src="https://github.com/user-attachments/assets/0cf073cf-fd6d-4216-944a-35ff7e1d640f" />
 
 ## CELL 5 : PAIN POINT 5 — Channel ไหนนำส่ง High Value Guests?
-กราฟ: Bubble Chart — Gross ADR vs Net ADR ขนาด Bubble = Volume
+กราฟ : Bubble Chart — Gross ADR vs Net ADR ขนาด Bubble = Volume
 • แกน X = Gross ADR (ราคาขาย), แกน Y = Net ADR (รายได้จริง)
 • Bubble ใหญ่ = ปริมาณการจองมาก
 • Channel ที่อยู่ด้านบนขวา (Gross สูง & Net สูง) = High Value Channel
