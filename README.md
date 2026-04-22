@@ -136,123 +136,109 @@ Revenue Improvement
 ---
 
 ## 5. Data Schema
----
-###  fact_booking_finish แก้
 
-ตารางหลักสำหรับเก็บข้อมูลการจอง (Transaction Table)
+โปรเจคนี้ใช้โครงสร้างแบบ Star Schema โดยมี fact table เป็นศูนย์กลาง และ dimension table สำหรับการวิเคราะห์
+
+---
+
+###  fact_booking_finish
+
+ตารางหลักสำหรับเก็บข้อมูลการจอง (Transactional Data)
 
 | Column Name  | Description                         |
 | ------------ | ----------------------------------- |
 | booking_id   | รหัสการจอง                          |
 | guest_id     | รหัสลูกค้า (FK)                     |
 | channel_id   | รหัสช่องทางการจอง (FK)              |
-| booking_date | วันที่ทำการจอง                      |
+| booking_date | วันที่จอง                           |
 | checkin_date | วันที่เข้าพัก                       |
 | room_rate    | ราคาห้องต่อคืน                      |
-| rate_code    | ประเภทเรทราคา (Promo / Rack)        |
 | room_nights  | จำนวนคืนที่เข้าพัก                  |
+| rate_code    | ประเภทเรทราคา (Promo / Rack)        |
 | revenue      | รายได้รวม (room_rate × room_nights) |
 
 ---
 
-###  dim_calendar แก้
+###  dim_channels
 
 ตารางข้อมูลช่องทางการจอง
 
-| Column Name     | Description                                   |
-| --------------- | --------------------------------------------- |
-| channel_id      | รหัสช่องทาง                                   |
-| channel_name    | ชื่อช่องทาง (Direct, Agoda, Booking, Expedia) |
-| commission_rate | อัตราค่าคอมมิชชั่น (%)                        |
+| Column Name     | Description                                  |
+| --------------- | -------------------------------------------- |
+| channel_id      | รหัสช่องทาง                                  |
+| channel_name    | ชื่อช่องทาง (Direct Web, Booking.com, Agoda) |
+| commission_rate | อัตราค่าคอมมิชชั่น                           |
 
 ---
 
-###  dim_channels แก้
+###  dim_guests
 
 ตารางข้อมูลลูกค้า
 
-| Column Name | Description                           |
-| ----------- | ------------------------------------- |
-| guest_id    | รหัสลูกค้า                            |
-| segment     | ประเภทลูกค้า (Leisure, Business, VIP) |
+| Column Name | Description                      |
+| ----------- | -------------------------------- |
+| guest_id    | รหัสลูกค้า                       |
+| segment     | ประเภทลูกค้า (Leisure, Business) |
 
 ---
 
-###  dim_rate_codes แก้
+###  dim_rate_code
 
 ตารางประเภทเรทราคา
 
 | Column Name | Description           |
 | ----------- | --------------------- |
-| rate_code   | รหัสเรทราคา           |
+| rate_code   | รหัสราคา              |
 | rate_type   | ประเภท (Promo / Rack) |
 
 ---
 
-###  dim_room_inventory แก้
+###  Derived Fields 
 
-ตารางวันที่ (ใช้สำหรับวิเคราะห์เวลา)
+#### Lead Time
 
-| Column Name | Description        |
-| ----------- | ------------------ |
-| date        | วันที่             |
-| month       | เดือน              |
-| year        | ปี                 |
-| day_of_week | วันในสัปดาห์       |
-| is_weekend  | เป็นวันหยุดหรือไม่ |
+```sql
+Lead Time = checkin_date - booking_date
+```
+
+ใช้ในการวิเคราะห์พฤติกรรมการจองล่วงหน้า (เชื่อมกับกราฟ Lead Time Analysis)
 
 ---
 
-###  dim_room_types แก้
+#### Demand Level
 
-ตารางวันที่ (ใช้สำหรับวิเคราะห์เวลา)
+```sql
+CASE 
+  WHEN COUNT(booking_id) OVER (PARTITION BY checkin_date) > threshold THEN 'High Demand'
+  ELSE 'Low Demand'
+END
+```
 
-| Column Name | Description        |
-| ----------- | ------------------ |
-| date        | วันที่             |
-| month       | เดือน              |
-| year        | ปี                 |
-| day_of_week | วันในสัปดาห์       |
-| is_weekend  | เป็นวันหยุดหรือไม่ |
-
----
-
-### dim_hotel_derived_features
-
-| Column Name | Description        |
-| ----------- | ------------------ |
-| day_of_week        | วันในสัปดาห์ของวัน Check-in (Monday–Sunday)             |
-| is_weekend      | ระบุว่าเป็นวันศุกร์หรือเสาร์ (True = Weekend, False = Weekday)             |
-| is_rack       | ระบุว่าเป็นราคาปกติ (Rack Rate) หรือไม่ (True = Rack Rate)                 |
-| ADR | รายได้เฉลี่ยต่อคืน (Average Daily Rate) = รายได้รวม ÷ จำนวนคืน       |
-| net_revenue | รายได้สุทธิหลังหักค่าคอมมิชชั่น (เช่น OTA) |
-| net_ADR | รายได้เฉลี่ยต่อคืนหลังหักค่าคอมมิชชั่น       |
-| lead_bin | กลุ่มระยะเวลาการจองล่วงหน้า (Booking Lead Time) เช่น 0-7 วัน, 8-14 วัน |
-
-ADR = “Average revenue earned per room-night
-
-net_ADR = “True revenue per night after distribution costs
-
-lead_bin = “Customer booking behavior segmentation by lead time
+ใช้แบ่งช่วง Peak / Non-Peak (เชื่อมกับกราฟ Promo vs Demand)
 
 ---
 
-##  Relationships (ความสัมพันธ์)
+## 🔗 Relationships
 
-* fact_booking_finish.guest_id → dim_guests.guest_id
 * fact_booking_finish.channel_id → dim_channels.channel_id
+* fact_booking_finish.guest_id → dim_guests.guest_id
 * fact_booking_finish.rate_code → dim_rate_code.rate_code
-* fact_booking_finish.checkin_date → dim_date.date
 
 ---
 
-### หมายเหตุ
+##  Data Usage in Analysis
 
-* ตาราง fact_booking_finish เป็นศูนย์กลางของการวิเคราะห์ (Star Schema)
-* ตาราง dim_* ใช้สำหรับอธิบายมิติข้อมูล (Dimensions)
-* demand_level เป็น Derived Field ที่สร้างจาก logic ทางธุรกิจ
+ข้อมูลใน schema นี้ถูกนำไปใช้ในการสร้างกราฟและการวิเคราะห์ ได้แก่:
+
+* ADR by Rate Code (Promo vs Rack)
+* Net Revenue by Channel (หลังหัก commission)
+* Lead Time vs ADR
+* Promotion Ratio ในช่วง High Demand
+
+โดยผลลัพธ์เหล่านี้แสดงในไฟล์ analysis (.ipynb) เพื่อสนับสนุนการวิเคราะห์และ Insights ของโปรเจค
 
 ---
+
 
 
 ---
