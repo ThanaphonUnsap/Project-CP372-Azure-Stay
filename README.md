@@ -168,7 +168,7 @@ dim_room_types ─────────────────────�
 
 ## 5.2 Fact Table
 
-### `fact_booking` (`hotel_processed_data_csv.xlsx`)
+### `fact_booking`
 
 The central fact table containing one row per booking record (5,318 rows).
 
@@ -208,7 +208,7 @@ The central fact table containing one row per booking record (5,318 rows).
 
 ## 5.3 Dimension Tables
 
-### `dim_room_types` (`dim_room_types.xlsx`)
+### `dim_room_types`
 
 Lookup table for hotel room categories (5 rows).
 
@@ -230,7 +230,7 @@ Lookup table for hotel room categories (5 rows).
 
 ---
 
-### `dim_rate_codes` (`dim_rate_codes.xlsx`)
+### `dim_rate_codes`
 
 Lookup table for rate plans and pricing strategies (5 rows).
 
@@ -254,8 +254,7 @@ Lookup table for rate plans and pricing strategies (5 rows).
 
 ---
 
-### `dim_channels` (`dim_channels.xlsx`)
-
+### `dim_channels`
 Lookup table for booking distribution channels (6 rows).
 
 | Column | Data Type | Description | Example |
@@ -278,7 +277,7 @@ Lookup table for booking distribution channels (6 rows).
 
 ---
 
-### `dim_calendar` (`dim_calendar.xlsx`)
+### `dim_calendar`
 
 Date dimension covering the full analysis period (61 rows: Sep 1 – Oct 31, 2025).
 
@@ -292,7 +291,7 @@ Date dimension covering the full analysis period (61 rows: Sep 1 – Oct 31, 202
 
 ---
 
-### `dim_room_inventory` (`dim_room_inventory.xlsx`)
+### `dim_room_inventory`
 
 Daily room inventory table at the hotel level (61 rows: Sep 1 – Oct 31, 2025).
 
@@ -307,7 +306,7 @@ Daily room inventory table at the hotel level (61 rows: Sep 1 – Oct 31, 2025).
 
 ## 5.4 Derived Feature Table
 
-### `dim_hotel_derived_features` (`dim_hotel_derived_features.csv`)
+### `dim_hotel_derived_features`
 
 Pre-computed feature table derived from `fact_booking`, used for analysis and modeling (5,318 rows — one row per booking).
 
