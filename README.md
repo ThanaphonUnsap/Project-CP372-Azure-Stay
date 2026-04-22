@@ -222,29 +222,44 @@ Revenue Improvement
 
 ###  dim_hotel_derived_features (Derived Table)
 
-ตารางที่สร้างจากการคำนวณเพื่อใช้ในการวิเคราะห์
+ตารางนี้เป็นข้อมูลที่สร้างขึ้นจากการคำนวณ (Derived Features) เพื่อใช้ในการวิเคราะห์เชิงธุรกิจ
 
-| Column Name  | Description                                    |
-| ------------ | ---------------------------------------------- |
-| booking_id   | รหัสการจอง                                     |
-| lead_time    | จำนวนวันล่วงหน้า (checkin_date - booking_date) |
-| demand_level | ระดับความต้องการ (High / Normal)               |
+| Column Name     | Description                                    |
+| --------------- | ---------------------------------------------- |
+| booking_id      | รหัสการจอง                                     |
+| lead_time       | จำนวนวันล่วงหน้า (checkin_date - booking_date) |
+| lead_time_group | กลุ่มการจอง (Short / Medium / Long)            |
+| demand_level    | ระดับความต้องการ (High / Normal)               |
+| day_of_week     | วันในสัปดาห์                                   |
+| is_weekend      | ระบุว่าเป็นวันหยุด (True/False)                |
 
 ---
 
-##  Derived Definitions
+##  Derived Logic
 
 ### Lead Time
 
-```sql id="e3g0r5"
+```sql id="3zj5z8"
 DATEDIFF(checkin_date, booking_date)
+```
+
+---
+
+### Lead Time Group
+
+```sql id="9hshwr"
+CASE 
+  WHEN lead_time <= 3 THEN 'Short'
+  WHEN lead_time <= 14 THEN 'Medium'
+  ELSE 'Long'
+END
 ```
 
 ---
 
 ### Demand Level
 
-```sql id="f2hz0c"
+```sql id="n4o4mx"
 CASE 
   WHEN day_of_week IN ('Friday', 'Saturday') THEN 'High Demand'
   ELSE 'Normal'
@@ -253,10 +268,13 @@ END
 
 ---
 
-### Net Revenue
+### Weekend Flag
 
-```sql id="3b6rgs"
-revenue - (revenue * commission_rate)
+```sql id="k7y3l6"
+CASE 
+  WHEN day_of_week IN ('Saturday', 'Sunday') THEN TRUE
+  ELSE FALSE
+END
 ```
 
 ---
