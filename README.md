@@ -346,6 +346,140 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 | `BLT_days` | `check_in_date − booking_date` (in days) |
 | `lead_bin` | Binned from `BLT_days`: 0–7 / 8–14 / 15–30 / 31+ |
 
+## 5.7 Prompt ที่ใช้สร้างชุดข้อมูล
+
+สร้างชุดข้อมูลการจองโรงแรมที่สมจริงสำหรับโรงแรม ชื่อ "Azure Stay" ข้อมูลต้องเป็นไปตาม schema นี้อย่างเคร่งครัดและต้องสอดคล้องกันภายใน (Foreign Key ต้องตรงกัน การคำนวณทางการเงินต้องถูกต้อง) สร้างดาต้าเซตบันทึกธุรกรรม 5000 แถว :
+
+
+
+Table 1: fact_bookings (The Transaction Data)
+
+Reused from Problem 1, but with added 'financial' columns.
+
+booking_id (PK): Unique ID for the reservation.
+
+booking_date: Date the booking was made.
+
+check_in_date: Date of arrival.
+
+channel_id (FK): Links to dim_channels.
+
+rate_code_id (FK): Links to dim_rate_codes.
+
+gross_room_revenue: Total revenue paid by the guest (before commission).
+
+commission_amount: (New) The calculated cost paid to the channel for this specific booking.
+
+net_room_revenue: (New) gross_room_revenue - commission_amount.
+
+status: Confirmed, Cancelled, Checked-Out.
+
+
+
+Table 2: dim_calendar
+
+| `Column` | `Type` | `ตัวอย่าง` |
+
+|----------------|------------------|-----------------|
+
+| `date_key` | Date (PK) | 2025-09-01 |
+
+| `day_name` | Text | Monday|
+
+| `is_weekend` | Boolean| False |
+
+| `is_holiday` | Boolean | False |
+
+| `season` | Text| Shoulder |
+
+
+
+Table 3: dim_channels
+
+| `Column` | `Type` | `ตัวอย่าง` |
+
+|----------------|------------------|-----------------|
+
+| `channel_id` | Text (PK) | CH_WEB |
+
+| `channel_name` | Text | Direct Website |
+
+| `channel_type` | Text | Direct |
+
+| `commission_rate` | Number | 0.0 |
+
+
+
+Table 4: dim_rate_codes
+
+| `Column` | `Type` | `ตัวอย่าง` |
+
+|----------------|------------------|-----------------|
+
+| `rate_code_id` | Text (PK) | RC_RACK |
+
+| `rate_name` | Text | Rack Rate |
+
+| `discount_factor` | Number | 1.0 |
+
+| `is_commissionable` | Boolean | 1 |
+
+| `description` | Text | Standard flexible rate |
+
+
+
+Table 5:dim_room_inventory
+
+| `Column` | `Type` | `ตัวอย่าง` |
+
+|----------------|------------------|-----------------|
+
+| `date` | date | 2025-09-01 |
+
+| `total_capacity` | Number | 120 |
+
+| `rooms_currently_using` | Number | 4 |
+
+| `rooms_available_for_sale` | Boolean | 116 |
+
+
+
+Table 6:dim_room_types
+
+| `Column` | `Type` | `ตัวอย่าง` |
+
+|----------------|------------------|-----------------|
+
+| `room_type_id` | Text (PK) | RT_STD_QN |
+
+| `room_type_name` | Text | Standard Queen |
+
+| `base_rate_usd` | Number | 120 |
+
+
+
+Table 7:dim_hotel_derived_features
+
+| `Column` | `Type` | `ตัวอย่าง` |
+
+|----------------|------------------|-----------------|
+
+| `booking_id` | Text (PK) | RES-00001 |
+
+| `day_of_week` | Text | Monday |
+
+| `is_weekend` | Boolean | False|
+
+| `is_rack` | Boolean | True |
+
+| `ADR` | Number | 208.0 |
+
+| `net_revenue` | Number | 682.24 |
+
+| `net_ADR` | Number | 170.56 |
+
+| `lead_bin` | Text | 8-14 days |
+
 ---
 
 ## 6. EDA & Visualizations
