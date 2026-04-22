@@ -1,5 +1,5 @@
 
-# 🏨 Azure Stay Hotel การเพิ่มประสิทธิภาพรายได้โรงแรม 🏨
+# 🏨 Azure Stay Hotel การเพิ่มประสิทธิภาพรายได้โรงแรม
 
 ## Problem 2: ต้นทุนการกระจายสินค้าสูง (High Distribution Costs)
 
