@@ -220,34 +220,35 @@ Revenue Improvement
 
 ---
 
-###  dim_hotel_derived_features (Derived Table)
+### 🔹 dim_hotel_derived_features (Derived Table)
 
 ตารางนี้เป็นข้อมูลที่สร้างขึ้นจากการคำนวณ (Derived Features) เพื่อใช้ในการวิเคราะห์เชิงธุรกิจ
 
-| Column Name     | Description                                    |
-| --------------- | ---------------------------------------------- |
-| booking_id      | รหัสการจอง                                     |
-| lead_time       | จำนวนวันล่วงหน้า (checkin_date - booking_date) |
-| lead_time_group | กลุ่มการจอง (Short / Medium / Long)            |
-| demand_level    | ระดับความต้องการ (High / Normal)               |
-| day_of_week     | วันในสัปดาห์                                   |
-| is_weekend      | ระบุว่าเป็นวันหยุด (True/False)                |
+| Column Name  | Description                             |
+| ------------ | --------------------------------------- |
+| booking_id   | รหัสการจอง                              |
+| lead_time    | จำนวนวันล่วงหน้า                        |
+| lead_bin     | กลุ่มการจอง (Short / Medium / Long)     |
+| demand_level | ระดับความต้องการ (High / Normal)        |
+| net_ADR      | รายได้เฉลี่ยต่อห้องหลังหักค่าคอมมิชชั่น |
+| day_of_week  | วันในสัปดาห์                            |
+| is_weekend   | ระบุวันหยุด (True/False)                |
 
 ---
 
-##  Derived Logic
+## 🔹 Derived Logic
 
 ### Lead Time
 
-```sql id="3zj5z8"
+```sql id="3g9c8z"
 DATEDIFF(checkin_date, booking_date)
 ```
 
 ---
 
-### Lead Time Group
+### Lead Bin
 
-```sql id="9hshwr"
+```sql id="9k3p1x"
 CASE 
   WHEN lead_time <= 3 THEN 'Short'
   WHEN lead_time <= 14 THEN 'Medium'
@@ -259,7 +260,7 @@ END
 
 ### Demand Level
 
-```sql id="n4o4mx"
+```sql id="4w7xzd"
 CASE 
   WHEN day_of_week IN ('Friday', 'Saturday') THEN 'High Demand'
   ELSE 'Normal'
@@ -268,14 +269,23 @@ END
 
 ---
 
+### Net ADR
+
+```sql id="k2d9qw"
+(room_rate - (room_rate * commission_rate))
+```
+
+---
+
 ### Weekend Flag
 
-```sql id="k7y3l6"
+```sql id="p8v2mt"
 CASE 
   WHEN day_of_week IN ('Saturday', 'Sunday') THEN TRUE
   ELSE FALSE
 END
 ```
+
 
 ---
 
