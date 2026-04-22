@@ -141,184 +141,216 @@ Revenue Improvement
 
 ---
 
-###  fact_booking_finish (hotel_processed_data)
+# 5. Data Schema
 
-ตารางหลักสำหรับเก็บข้อมูลการจองและใช้ในการวิเคราะห์ทั้งหมด
-
-| Column Name  | Description                         |
-| ------------ | ----------------------------------- |
-| booking_id   | รหัสการจอง                          |
-| booking_date | วันที่ทำการจอง                      |
-| checkin_date | วันที่เข้าพัก                       |
-| channel_id   | รหัสช่องทางการจอง (FK)              |
-| rate_code    | ประเภทเรทราคา (FK)                  |
-| room_type_id | ประเภทห้อง (FK)                     |
-| room_nights  | จำนวนคืนที่เข้าพัก                  |
-| room_rate    | ราคาห้องต่อคืน                      |
-| revenue      | รายได้รวม (room_rate × room_nights) |
+This project uses a **star schema** design consisting of one fact table and five dimension tables, plus one derived feature table.
 
 ---
 
-###  dim_channels
+## 5.1 Entity Relationship Overview
 
-ข้อมูลช่องทางการจอง
-
-| Column Name     | Description                                  |
-| --------------- | -------------------------------------------- |
-| channel_id      | รหัสช่องทาง                                  |
-| channel_name    | ชื่อช่องทาง (Direct Web, Booking.com, Agoda) |
-| channel_type    | ประเภท (Direct / OTA)                        |
-| commission_rate | อัตราค่าคอมมิชชั่น                           |
-
----
-
-###  dim_rate_codes
-
-ข้อมูลประเภทเรทราคา
-
-| Column Name | Description              |
-| ----------- | ------------------------ |
-| rate_code   | รหัสเรทราคา              |
-| rate_type   | ประเภท (Rack / Non-Rack) |
-| description | รายละเอียดราคา           |
-
----
-
-###  dim_room_types
-
-ข้อมูลประเภทห้องพัก
-
-| Column Name  | Description    |
-| ------------ | -------------- |
-| room_type_id | รหัสประเภทห้อง |
-| room_type    | ชื่อประเภทห้อง |
-
----
-
-###  dim_room_inventory
-
-ข้อมูลจำนวนห้องที่มีในระบบ
-
-| Column Name  | Description      |
-| ------------ | ---------------- |
-| room_type_id | รหัสประเภทห้อง   |
-| total_rooms  | จำนวนห้องทั้งหมด |
-
----
-
-###  dim_calendar
-
-ข้อมูลวันที่สำหรับการวิเคราะห์เวลา
-
-| Column Name | Description              |
-| ----------- | ------------------------ |
-| date        | วันที่                   |
-| day_of_week | วันในสัปดาห์             |
-| month       | เดือน                    |
-| year        | ปี                       |
-| is_weekend  | ระบุวันหยุด (True/False) |
-
----
-
-###  dim_hotel_derived_features (Derived Table)
-
-ตารางนี้เป็นข้อมูลที่สร้างขึ้นจากการคำนวณ (Derived Features) เพื่อใช้ในการวิเคราะห์เชิงธุรกิจ
-
-| Column Name  | Description                             |
-| ------------ | --------------------------------------- |
-| booking_id   | รหัสการจอง                              |
-| lead_time    | จำนวนวันล่วงหน้า                        |
-| lead_bin     | กลุ่มการจอง (Short / Medium / Long)     |
-| demand_level | ระดับความต้องการ (High / Normal)        |
-| net_ADR      | รายได้เฉลี่ยต่อห้องหลังหักค่าคอมมิชชั่น |
-| day_of_week  | วันในสัปดาห์                            |
-| is_weekend   | ระบุวันหยุด (True/False)                |
-
----
-
-##  Derived Logic
-
-### Lead Time
-
-```sql id="3g9c8z"
-DATEDIFF(checkin_date, booking_date)
+```
+dim_calendar ──────────────────────────────────────────────────┐
+dim_channels ─────────────────────────────────────────────┐    │
+dim_rate_codes ───────────────────────────────────────┐    │    │
+dim_room_types ───────────────────────────────────┐    │    │    │
+                                                  ▼    ▼    ▼    ▼
+                                           ┌──────────────────────────┐
+                                           │      fact_booking         │
+                                           └──────────────────────────┘
+                                                        │
+                                                        ▼
+                                           dim_hotel_derived_features
+                                           dim_room_inventory (date-level)
 ```
 
 ---
 
-### Lead Bin
+## 5.2 Fact Table
 
-```sql id="9k3p1x"
-CASE 
-  WHEN lead_time <= 3 THEN 'Short'
-  WHEN lead_time <= 14 THEN 'Medium'
-  ELSE 'Long'
-END
+### `fact_booking` (`hotel_processed_data_csv.xlsx`)
+
+The central fact table containing one row per booking record (5,318 rows).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `booking_id` | Nominal (String) | Unique booking identifier **(Primary Key)** | `RES-00001` |
+| `booking_date` | Interval (Date) | Date the booking was created | `2025-08-22` |
+| `check_in_date` | Interval (Date) | Scheduled check-in date | `2025-09-01` |
+| `check_out_date` | Interval (Date) | Scheduled check-out date | `2025-09-09` |
+| `room_type_id` | Nominal (String) | Foreign key → `dim_room_types` | `RT_DLX_KG` |
+| `room_type_name` | Nominal (String) | Human-readable room type name | `Deluxe King` |
+| `base_price` | Ratio (Continuous) | Base nightly room price in USD before discount | `170` |
+| `commission_rate` | Ratio (Continuous) | Channel commission rate (0–1) | `0.18` |
+| `rate_code_id` | Nominal (String) | Foreign key → `dim_rate_codes` | `RC_RACK` |
+| `rate_name` | Nominal (String) | Human-readable rate plan name | `Rack Rate` |
+| `discount_factor` | Ratio (Continuous) | Discount multiplier applied to base price (0–1) | `1.0` |
+| `channel_id` | Nominal (String) | Foreign key → `dim_channels` | `CH_WEB` |
+| `channel_name` | Nominal (String) | Human-readable channel name | `Direct Website` |
+| `channel_type` | Nominal (String) | Channel category | `Direct`, `OTA`, `GDS`, `Wholesale` |
+| `segment_id` | Nominal (String) | Guest market segment | `Business`, `Leisure`, `Wholesale`, `Transient`, `Group` |
+| `status` | Nominal (String) | Current booking status | `Confirmed`, `Checked-Out`, `Cancelled`, `No-Show` |
+| `total_room_revenue` | Ratio (Continuous) | Total revenue for the booking in USD | `832.00` |
+| `number_of_rooms` | Ratio (Discrete) | Number of rooms in the booking | `1`, `2`, `3` |
+| `adults_count` | Ratio (Discrete) | Number of adult guests | `1`–`5` |
+| `children_count` | Ratio (Discrete) | Number of child guests | `0`–`4` |
+| `LOS_nights` | Ratio (Discrete) | Length of stay in nights | `2`–`14` |
+| `BLT_days` | Ratio (Discrete) | Booking lead time in days (days between booking and check-in) | `0`–`49+` |
+| `day_of_week` | Nominal (String) | Day of the week for check-in date | `Monday`–`Sunday` |
+| `is_weekend` | Binary (Boolean) | Whether check-in falls on a weekend (Sat–Sun) | `True`, `False` |
+| `is_rack` | Binary (Boolean) | Whether booking is at rack rate (`RC_RACK`) | `True`, `False` |
+| `ADR` | Ratio (Continuous) | Average Daily Rate = `total_room_revenue / LOS_nights / number_of_rooms` | `208.00` |
+| `net_revenue` | Ratio (Continuous) | Revenue after deducting channel commission | `682.24` |
+| `net_ADR` | Ratio (Continuous) | Net ADR after commission | `170.56` |
+| `lead_bin` | Ordinal (String) | Bucketed booking lead time | `0–7 days`, `8–14 days`, `15–30 days`, `31+ days` |
+
+---
+
+## 5.3 Dimension Tables
+
+### `dim_room_types` (`dim_room_types.xlsx`)
+
+Lookup table for hotel room categories (5 rows).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `room_type_id` | Nominal (String) | Unique room type identifier **(Primary Key)** | `RT_DLX_KG` |
+| `room_type_name` | Nominal (String) | Human-readable room type name | `Deluxe King` |
+| `base_rate_usd` | Ratio (Continuous) | Base nightly rate in USD | `170` |
+
+**Available room types:**
+
+| `room_type_id` | `room_type_name` | `base_rate_usd` |
+|----------------|------------------|-----------------|
+| `RT_STD_QN` | Standard Queen | $120 |
+| `RT_DLX_KG` | Deluxe King | $170 |
+| `RT_SUIT` | Suite | $260 |
+| `RT_OCEAN` | Ocean View | $210 |
+| `RT_ACC` | Accessible | $130 |
+
+---
+
+### `dim_rate_codes` (`dim_rate_codes.xlsx`)
+
+Lookup table for rate plans and pricing strategies (5 rows).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `rate_code_id` | Nominal (String) | Unique rate code identifier **(Primary Key)** | `RC_RACK` |
+| `rate_name` | Nominal (String) | Human-readable rate plan name | `Rack Rate` |
+| `discount_factor` | Ratio (Continuous) | Price multiplier applied to base rate (0–1) | `0.85` |
+| `is_commissionable` | Binary (Boolean) | Whether a channel commission is applied | `1` = Yes, `0` = No |
+| `description` | Nominal (String) | Brief description of the rate plan | `Corporate negotiated rate.` |
+
+**Available rate codes:**
+
+| `rate_code_id` | `rate_name` | `discount_factor` | `is_commissionable` |
+|----------------|-------------|-------------------|----------------------|
+| `RC_RACK` | Rack Rate | 1.00 | Yes |
+| `RC_AAA` | AAA Discount | 0.90 | Yes |
+| `RC_CORP` | Corporate Negotiated | 0.85 | No |
+| `RC_NRF` | Non-Refundable | 0.80 | Yes |
+| `RC_SEAS` | Seasonal Promo | 0.88 | Yes |
+
+---
+
+### `dim_channels` (`dim_channels.xlsx`)
+
+Lookup table for booking distribution channels (6 rows).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `channel_id` | Nominal (String) | Unique channel identifier **(Primary Key)** | `CH_WEB` |
+| `channel_name` | Nominal (String) | Human-readable channel name | `Direct Website` |
+| `channel_type` | Nominal (String) | Broad channel category | `Direct`, `OTA`, `GDS`, `Wholesale` |
+| `commission_rate` | Ratio (Continuous) | Commission rate charged by this channel (0–1) | `0.18` |
+
+**Available channels:**
+
+| `channel_id` | `channel_name` | `channel_type` | `commission_rate` |
+|--------------|----------------|----------------|-------------------|
+| `CH_WEB` | Direct Website | Direct | 0.00 |
+| `CH_WALK` | Walk-in | Direct | 0.00 |
+| `CH_EXP` | Expedia | OTA | 0.18 |
+| `CH_BKG` | Booking.com | OTA | 0.17 |
+| `CH_GDS` | GDS | GDS | 0.12 |
+| `CH_CORP` | Corporate Agent | Wholesale | 0.10 |
+
+---
+
+### `dim_calendar` (`dim_calendar.xlsx`)
+
+Date dimension covering the full analysis period (61 rows: Sep 1 – Oct 31, 2025).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `date_key` | Interval (Date) | Calendar date **(Primary Key)** | `2025-09-15` |
+| `day_name` | Nominal (String) | Name of the day of the week | `Monday` |
+| `is_weekend` | Binary (Boolean) | Whether the date is a Saturday or Sunday | `True`, `False` |
+| `is_holiday` | Binary (Boolean) | Whether the date is a public holiday | `True`, `False` |
+| `season` | Ordinal (String) | Demand season classification | `High`, `Shoulder` |
+
+---
+
+### `dim_room_inventory` (`dim_room_inventory.xlsx`)
+
+Daily room inventory table at the hotel level (61 rows: Sep 1 – Oct 31, 2025).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `date` | Interval (Date) | Calendar date **(Primary Key)** | `2025-09-01` |
+| `total_capacity` | Ratio (Discrete) | Total number of rooms in the hotel | `120` |
+| `rooms_out_of_order` | Ratio (Discrete) | Rooms that are closed for maintenance or unavailable for sale | `0`–`12` |
+| `rooms_available_for_sale` | Ratio (Discrete) | Rooms ready to be sold = `total_capacity − rooms_out_of_order` | `116` |
+
+---
+
+## 5.4 Derived Feature Table
+
+### `dim_hotel_derived_features` (`dim_hotel_derived_features.csv`)
+
+Pre-computed feature table derived from `fact_booking`, used for analysis and modeling (5,318 rows — one row per booking).
+
+| Column | Data Type | Description | Example |
+|--------|-----------|-------------|---------|
+| `booking_id` | Nominal (String) | Foreign key → `fact_booking` **(Primary Key)** | `RES-00001` |
+| `day_of_week` | Nominal (String) | Day of the week for check-in date | `Monday` |
+| `is_weekend` | Binary (Boolean) | Whether check-in falls on a weekend | `True`, `False` |
+| `is_rack` | Binary (Boolean) | Whether the booking uses rack rate (`RC_RACK`) | `True`, `False` |
+| `ADR` | Ratio (Continuous) | Average Daily Rate in USD | `208.00` |
+| `net_revenue` | Ratio (Continuous) | Revenue after deducting channel commission | `682.24` |
+| `net_ADR` | Ratio (Continuous) | Net ADR after commission deduction | `170.56` |
+| `lead_bin` | Ordinal (String) | Bucketed booking lead time | `0–7 days`, `8–14 days`, `15–30 days`, `31+ days` |
+
+---
+
+## 5.5 Key Relationships
+
+```
+fact_booking.room_type_id   → dim_room_types.room_type_id
+fact_booking.rate_code_id   → dim_rate_codes.rate_code_id
+fact_booking.channel_id     → dim_channels.channel_id
+fact_booking.check_in_date  → dim_calendar.date_key
+fact_booking.check_in_date  → dim_room_inventory.date
+fact_booking.booking_id     → dim_hotel_derived_features.booking_id
 ```
 
 ---
 
-### Demand Level
+## 5.6 Derived / Calculated Columns
 
-```sql id="4w7xzd"
-CASE 
-  WHEN day_of_week IN ('Friday', 'Saturday') THEN 'High Demand'
-  ELSE 'Normal'
-END
-```
+The following columns in `fact_booking` and `dim_hotel_derived_features` are **computed columns**, not raw source fields:
 
----
-
-### Net ADR
-
-```sql id="k2d9qw"
-(room_rate - (room_rate * commission_rate))
-```
-
----
-
-### Weekend Flag
-
-```sql id="p8v2mt"
-CASE 
-  WHEN day_of_week IN ('Saturday', 'Sunday') THEN TRUE
-  ELSE FALSE
-END
-```
-
-
----
-
-##  Relationships
-
-* fact_booking_finish.channel_id → dim_channels.channel_id
-* fact_booking_finish.rate_code → dim_rate_codes.rate_code
-* fact_booking_finish.room_type_id → dim_room_types.room_type_id
-* fact_booking_finish.checkin_date → dim_calendar.date
-* fact_booking_finish.booking_id → dim_hotel_derived_features.booking_id
-
----
-
-##  Data Usage in Analysis
-
-ข้อมูลจาก schema นี้ถูกนำไปใช้ในการวิเคราะห์และสร้างกราฟในไฟล์ .ipynb ได้แก่:
-
-* Promotion Usage by Demand Level
-* ADR Comparison (Rack vs Non-Rack)
-* Channel Performance (Gross ADR vs Net ADR)
-* Lead Time vs Pricing
-* Channel Profitability Analysis
-
----
-
-##  หมายเหตุ
-
-* Schema นี้ออกแบบให้สอดคล้องกับ dataset จริงในโฟลเดอร์ data
-* Derived fields ถูกสร้างขึ้นเพื่อใช้ในการวิเคราะห์เชิงธุรกิจ
-* โครงสร้างนี้ช่วยให้สามารถวิเคราะห์ Revenue, Pricing และ Channel Performance ได้อย่างครบถ้วน
-
----
-
+| Column | Formula |
+|--------|---------|
+| `total_room_revenue` | `base_price × discount_factor × LOS_nights × number_of_rooms` |
+| `ADR` | `total_room_revenue / LOS_nights / number_of_rooms` |
+| `net_revenue` | `total_room_revenue × (1 − commission_rate)` |
+| `net_ADR` | `net_revenue / LOS_nights / number_of_rooms` |
+| `is_rack` | `True` if `rate_code_id == 'RC_RACK'` else `False` |
+| `rooms_available_for_sale` | `total_capacity − rooms_out_of_order` |
+| `BLT_days` | `check_in_date − booking_date` (in days) |
+| `lead_bin` | Binned from `BLT_days`: 0–7 / 8–14 / 15–30 / 31+ |
 
 
 ---
