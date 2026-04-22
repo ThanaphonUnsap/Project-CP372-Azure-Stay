@@ -135,13 +135,15 @@ Revenue Improvement
 
 ---
 
+# Section 3: Data Execution & EDA
+
 ## 5. Data Schema
 
 โปรเจคนี้ใช้โครงสร้างแบบ Star Schema โดยมีตาราง fact เป็นศูนย์กลาง และ dimension tables สำหรับการวิเคราะห์เชิงธุรกิจ
 
 ---
 
-# 5. Data Schema
+## 5. AI Data Quality 
 
 This project uses a **star schema** design consisting of one fact table and five dimension tables, plus one derived feature table.
 
@@ -351,12 +353,15 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 | `BLT_days` | `check_in_date − booking_date` (in days) |
 | `lead_bin` | Binned from `BLT_days`: 0–7 / 8–14 / 15–30 / 31+ |
 
+---
+
+## 6.EDA & Visualizations
 
 ---
 
+Section 4: Insights & Impact
 
-
-## 7. Insights
+## 7. Findings (Insights)
 
 ### 1. Inefficient Use of Promotions During Peak Demand
 
@@ -382,7 +387,7 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 ---
 
 
-## 8. Business Recommendations
+## 8. Recommendations
 
 * ลดการใช้ Promotion ในช่วง High Demand
 * เพิ่มสัดส่วน Rack Rate
