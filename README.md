@@ -1,4 +1,3 @@
-
 # 🏨 Azure Stay Hotel การเพิ่มประสิทธิภาพรายได้โรงแรม
 
 ## Problem 2: ต้นทุนการกระจายสินค้าสูง (High Distribution Costs)
@@ -137,15 +136,9 @@ Revenue Improvement
 
 # Section 3: Data Execution & EDA
 
-## 5. Data Schema
-
-โปรเจคนี้ใช้โครงสร้างแบบ Star Schema โดยมีตาราง fact เป็นศูนย์กลาง และ dimension tables สำหรับการวิเคราะห์เชิงธุรกิจ
-
----
-
 ## 5. AI Data Quality 
 
-This project uses a **star schema** design consisting of one fact table and five dimension tables, plus one derived feature table.
+โปรเจคนี้ใช้โครงสร้างแบบ Star Schema โดยมีตาราง fact เป็นศูนย์กลาง และ dimension tables สำหรับการวิเคราะห์เชิงธุรกิจ
 
 ---
 
@@ -385,7 +378,6 @@ Section 4: Insights & Impact
 ซึ่งเป็นโอกาสในการนำกลยุทธ์ Dynamic Pricing มาใช้เพื่อเพิ่มรายได้
 
 ---
-
 
 ## 8. Recommendations
 
