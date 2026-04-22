@@ -206,6 +206,24 @@ END
 
 ---
 
+### dim_hotel_derived_features
+
+| Column Name | Description        |
+| ----------- | ------------------ |
+| day_of_week        | วันในสัปดาห์ของวัน Check-in (Monday–Sunday)             |
+| is_weekend      | ระบุว่าเป็นวันศุกร์หรือเสาร์ (True = Weekend, False = Weekday)             |
+| is_rack       | ระบุว่าเป็นราคาปกติ (Rack Rate) หรือไม่ (True = Rack Rate)                 |
+| ADR | รายได้เฉลี่ยต่อคืน (Average Daily Rate) = รายได้รวม ÷ จำนวนคืน       |
+| net_revenue | รายได้สุทธิหลังหักค่าคอมมิชชั่น (เช่น OTA) |
+| net_ADR | รายได้เฉลี่ยต่อคืนหลังหักค่าคอมมิชชั่น       |
+| lead_bin | กลุ่มระยะเวลาการจองล่วงหน้า (Booking Lead Time) เช่น 0-7 วัน, 8-14 วัน |
+
+ADR = “Average revenue earned per room-night”
+net_ADR = “True revenue per night after distribution costs”
+lead_bin = “Customer booking behavior segmentation by lead time”
+
+---
+
 ##  Relationships (ความสัมพันธ์)
 
 * fact_booking_finish.guest_id → dim_guests.guest_id
