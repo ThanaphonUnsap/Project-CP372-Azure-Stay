@@ -220,7 +220,7 @@ Revenue Improvement
 
 ---
 
-### 🔹 dim_hotel_derived_features (Derived Table)
+###  dim_hotel_derived_features (Derived Table)
 
 ตารางนี้เป็นข้อมูลที่สร้างขึ้นจากการคำนวณ (Derived Features) เพื่อใช้ในการวิเคราะห์เชิงธุรกิจ
 
@@ -236,7 +236,7 @@ Revenue Improvement
 
 ---
 
-## 🔹 Derived Logic
+##  Derived Logic
 
 ### Lead Time
 
