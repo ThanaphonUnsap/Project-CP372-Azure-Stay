@@ -4,7 +4,9 @@
 ## ปัญหา 2: ต้นทุนการกระจายสินค้าสูง (High Distribution Costs)
 
 > **กลุ่ม:** 150, 239, 569
+> 
 > **รายวิชา:** CP372 Data Analytics and Business Intelligence
+> 
 > **ชุดข้อมูล:** ข้อมูลสังเคราะห์โดย AI
 
 ---
