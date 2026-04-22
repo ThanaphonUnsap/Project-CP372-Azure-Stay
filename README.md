@@ -295,60 +295,7 @@ revenue - (revenue * commission_rate)
 
 ---
 
-## 6. SQL Analysis
 
-### 6.1 วิเคราะห์ ADR ตาม Rate และ Demand
-
-```sql id="0e6b4d"
-SELECT 
-    demand_level,
-    rate_code,
-    COUNT(*) AS total_bookings,
-    AVG(room_rate) AS adr,
-    SUM(room_rate) AS revenue
-FROM fact_bookings
-GROUP BY demand_level, rate_code
-ORDER BY demand_level;
-```
-
----
-
-### 6.2 วิเคราะห์ Channel และ Net Revenue
-
-```sql id="6trn5u"
-SELECT 
-    c.channel_name,
-    COUNT(*) AS bookings,
-    SUM(f.room_rate) AS revenue,
-    SUM(f.room_rate * c.commission_rate) AS commission,
-    SUM(f.room_rate - (f.room_rate * c.commission_rate)) AS net_revenue,
-    AVG(f.room_rate) AS adr,
-    AVG(f.room_rate - (f.room_rate * c.commission_rate)) AS net_adr
-FROM fact_bookings f
-JOIN dim_channels c ON f.channel_id = c.channel_id
-GROUP BY c.channel_name
-ORDER BY net_revenue DESC;
-```
-
----
-
-### 6.3 วิเคราะห์ Lead Time
-
-```sql id="0k0p4f"
-SELECT 
-    CASE 
-        WHEN DATEDIFF(checkin_date, booking_date) <= 3 THEN 'Short'
-        WHEN DATEDIFF(checkin_date, booking_date) <= 14 THEN 'Medium'
-        ELSE 'Long'
-    END AS lead_time_group,
-    COUNT(*) AS bookings,
-    AVG(room_rate) AS adr
-FROM fact_bookings
-GROUP BY lead_time_group
-ORDER BY adr DESC;
-```
-
----
 
 ## 7. Insights
 
