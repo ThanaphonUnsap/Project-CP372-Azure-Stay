@@ -507,3 +507,12 @@ Project-CP372-Azure-Stay/
 │
 └── README.md
 ```
+---
+
+# 9. วิธีรันโปรแกรม
+
+## ตัวเลือก A — Google Colab (แนะนำ)
+1. ไปที่ https://github.com/ThanaphonUnsap/Project-CP372-Azure-Stay/tree/main
+2. และไปที่ data/hotel_Finished_dataset.xlsx ดาวน์โหลด
+3. เข้า Colab แล้วทำการลากไฟล์ใส่เข้าไปใน
+4. รันทุกเซลล์ตามลำดับ
