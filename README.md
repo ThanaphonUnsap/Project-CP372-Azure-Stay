@@ -261,7 +261,7 @@ revenue - (revenue * commission_rate)
 
 ---
 
-## 🔗 Relationships
+##  Relationships
 
 * fact_booking_finish.channel_id → dim_channels.channel_id
 * fact_booking_finish.rate_code → dim_rate_codes.rate_code
@@ -271,7 +271,7 @@ revenue - (revenue * commission_rate)
 
 ---
 
-## 📊 Data Usage in Analysis
+##  Data Usage in Analysis
 
 ข้อมูลจาก schema นี้ถูกนำไปใช้ในการวิเคราะห์และสร้างกราฟในไฟล์ .ipynb ได้แก่:
 
@@ -283,7 +283,7 @@ revenue - (revenue * commission_rate)
 
 ---
 
-## 📌 หมายเหตุ
+##  หมายเหตุ
 
 * Schema นี้ออกแบบให้สอดคล้องกับ dataset จริงในโฟลเดอร์ data
 * Derived fields ถูกสร้างขึ้นเพื่อใช้ในการวิเคราะห์เชิงธุรกิจ
