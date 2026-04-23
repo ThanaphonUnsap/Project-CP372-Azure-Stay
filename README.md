@@ -512,7 +512,7 @@ Columns: 29 คอลัมน์"
 
 > **Note:** ค่า Min ที่ติดลบใน `total_room_revenue`, `ADR`, `net_revenue` และ `net_ADR` คือค่าก่อนทำ Step 4 (Removed negative LOS) — หลังจาก clean แล้วค่าเหล่านี้จะถูกกำจัดออก
 ---
-## CELL 1 : PAIN POINT 1 — ขาย Promo มากเกินไปในวัน High Demand
+## CELL 1 : Hypotheses 1 — ขาย Promo มากเกินไปในวัน High Demand
 **กราฟ** : Grouped Bar Chart — สัดส่วน Rack Rate vs Non-Rack Rate แยกตามวันในสัปดาห์ (เรียงจาก Mon → Sun)
 • เปรียบเทียบสัดส่วนการขาย Rack Rate และ Non-Rack Rate
     ในแต่ละวันของสัปดาห์
@@ -525,7 +525,7 @@ Columns: 29 คอลัมน์"
   ได้ในมุมมองเดียว สื่อสารได้ชัดเจนกว่า Pie Chart หรือ Stacked Bar
 <img width="1187" height="586" alt="image" src="https://github.com/user-attachments/assets/c04c13aa-6b58-48a5-adf0-a01d8aa819ae" />
 
-## CELL 2 : PAIN POINT 2 — สัดส่วน Rack Rate โดยรวมต่ำกว่าที่ควร
+## CELL 2 : Hypotheses 2 — สัดส่วน Rack Rate โดยรวมต่ำกว่าที่ควร
 **กราฟ :** Donut Chart (Pie with hole) + Bar Chart เปรียบ ADR
 • Donut Chart แสดงสัดส่วน Rack Rate ต่อ Non-Rack Rate ทั้งหมด
     — หาก Non-Rack Rate เกิน 60% แสดงว่าโรงแรมปล่อยส่วนลดมากเกินไป
@@ -537,7 +537,7 @@ Columns: 29 คอลัมน์"
   จับคู่กับ Bar Chart เพื่อเชื่อม "ปริมาณ" กับ "มูลค่า" ในสไลด์เดียว
 <img width="1223" height="590" alt="image" src="https://github.com/user-attachments/assets/33bc8c4e-9e9e-435f-9dc5-3740605ca03d" />
 
-## CELL 3 : PAIN POINT 3 — OTA ดึงรายได้หายไป 8.7%
+## CELL 3 : Hypotheses 3 — OTA ดึงรายได้หายไป 8.7%
 **กราฟ :** Grouped Bar Chart — Gross ADR vs Net ADR แต่ละ Channel พร้อมเส้นแสดง Commission Rate
 • แสดง ADR ก่อน (Gross) และหลัง (Net) หัก Commission ทุก Channel
 • ช่อง OTA เช่น Booking.com / Expedia มักมี Gross ADR สูง
