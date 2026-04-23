@@ -100,6 +100,17 @@ Net Revenue per Channel = Gross Revenue - Commission Loss
 Channel Efficiency = (Net ADRchannel / Gross ADRChannel) x 100 
 ```
 
+
+```
+4 - Last-Minute Pricing !!!!
+
+Lead Time ADR Gap = ADR31 + days - ADRo-7 days
+
+Pricing Curve Slope = ΔADR / ΔLead Time (days)
+
+ถ้า Slope เป็นบวก = ยิ่งจองล่วงหน้ามาก ADR ยิ่งสูง (ผิดปกติ ควรเป็นลบ)
+```
+
 ### Dimensions
 
 * Booking Channel
@@ -112,6 +123,7 @@ Channel Efficiency = (Net ADRchannel / Gross ADRChannel) x 100
 1. ขาย Promo มากเกินไปแม้ในวัน High Demand การจองช่วงวันหยุดสุดสัปดาห์ (Fri–Sat) ยังเป็น Non-Rack Rate ถึง 31.2% ทั้งที่เป็นช่วงที่ความต้องการสูง ส่งผลให้ ADR ต่ำกว่า Rack Rate เฉลี่ย 12.3%
 2. สัดส่วน Rack Rate ต่ำกว่าที่ควร การจองทั้งหมดมีเพียง 38.1% ที่เป็น Rack Rate ขณะที่ Non-Rack Rate คิดเป็น 61.9% แสดงว่าโรงแรมปล่อยส่วนลดมากเกินความจำเป็น
 3. OTA ดึงรายได้หายไป 8.7% OTA คิดเป็น 33.3% ของการจองทั้งหมด แต่เสียค่า Commission เฉลี่ย 17.6% ต่อการจอง ทำให้สูญเสียรายได้รวมถึง 8.7% ของ Gross Revenue ทั้งหมด
+4. ไม่ได้ประโยชน์จากลูกค้าจองกระชั้นลูกค้าที่จองล่วงหน้าน้อยกว่า 7 วัน ให้ ADR ต่ำกว่าลูกค้าที่จองล่วงหน้ามากกว่า 10% ทั้งที่ควรตั้งราคาสูงขึ้นเมื่อห้องเหลือน้อย
 
 ### Analytical Approach
 
@@ -548,6 +560,16 @@ Columns: 29 คอลัมน์"
   และ "ต้นทุน" ในกราฟเดียว — เหมาะสำหรับ Revenue Manager ที่ต้อง
   เปรียบเทียบ Channel Profitability อย่างรวดเร็ว
 <img width="1186" height="588" alt="image" src="https://github.com/user-attachments/assets/b3d80c52-cd1c-4b71-a0d4-1de1aaa0c400" />
+
+## CELL 4 : Hypotheses 4 — ไม่ได้ประโยชน์จากลูกค้าจองกระชั้น
+**กราฟ:** Bar Chart + Scatter Plot — ADR เฉลี่ยตามกลุ่ม Lead Time + แสดง Volume ประกอบ
+• ลูกค้าที่จองล่วงหน้า 0–7 วัน (Last-Minute) ควรจ่ายราคาสูงกว่า เพราะห้องเหลือน้อยและ Demand สูง — แต่ถ้า ADR กลับต่ำกว่า แสดงว่าระบบ Pricing ยังไม่ได้ใช้ Last-Minute Premium • Volume ของแต่ละ Segment 
+ช่วยบอกว่า Last-Minute มีสัดส่วนมากน้อยแค่ไหน
+
+**เหตุผลที่เลือก :** Bar เรียงตาม Lead Time ทำให้เห็น Pricing Curve — ควรเห็นว่า ยิ่งจองกระชั้นยิ่งราคาสูง (Inverse Relationship ตาม Revenue Management Theory) 
+ถ้า Curve ไม่เป็นแบบนั้น คือ Pricing Opportunity ที่ยังไม่ได้ใช้
+<img width="989" height="590" alt="image" src="https://github.com/user-attachments/assets/288c7369-6b6a-4384-9f5a-b7b1ed49983c" />
+
 
 ---
 
