@@ -125,13 +125,6 @@ Pricing Curve Slope = ΔADR / ΔLead Time (days)
 3. OTA ดึงรายได้หายไป 8.7% OTA คิดเป็น 33.3% ของการจองทั้งหมด แต่เสียค่า Commission เฉลี่ย 17.6% ต่อการจอง ทำให้สูญเสียรายได้รวมถึง 8.7% ของ Gross Revenue ทั้งหมด
 4. ไม่ได้ประโยชน์จากลูกค้าจองกระชั้นลูกค้าที่จองล่วงหน้าน้อยกว่า 7 วัน ให้ ADR ต่ำกว่าลูกค้าที่จองล่วงหน้ามากกว่า 10% ทั้งที่ควรตั้งราคาสูงขึ้นเมื่อห้องเหลือน้อย
 
-### Analytical Approach
-
-* แบ่งข้อมูลตาม Demand Level
-* เปรียบเทียบ Promo กับ Rack Rate
-* วิเคราะห์ ADR ตาม Channel
-* วิเคราะห์ ADR ตาม Lead Time
-
 ### Expected Outcome
 
 * ลดการใช้ Promotion ในช่วง High Demand
