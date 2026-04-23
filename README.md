@@ -31,14 +31,56 @@
 Pain Point 1: ขาย Promo มากเกินไปแม้ในวัน High Demand
 การจองช่วงวันหยุดสุดสัปดาห์ (Fri–Sat) ยังเป็น Non-Rack Rate ถึง 31.2% ทั้งที่เป็นช่วงที่ความต้องการสูง ส่งผลให้ ADR ต่ำกว่า Rack Rate เฉลี่ย 12.3%
 
+```
+Pain Point 1 — Promo ใน High Demand
+
+Promotion Ratio = (Non-Rack Bookings / Total Bookings)*100
+
+ADR Gap = ADRRack - ADRNon-Rack
+
+Revenue Opportunity Lost = ADR Gap x Non-Rack Bookings (Weekend)
+```
+
 Pain Point 2: สัดส่วน Rack Rate ต่ำกว่าที่ควร
 การจองทั้งหมดมีเพียง 38.1% ที่เป็น Rack Rate ขณะที่ Non-Rack Rate คิดเป็น 61.9% แสดงว่าโรงแรมปล่อยส่วนลดมากเกินความจำเป็น
+
+```
+Pain Point 2 - Rack Rate สัดส่วนต่ำ
+
+Rack Rate Share = (Rack Rate Bookings / Total Bookings) x 100
+
+Rate Mix Index = Rack Rate Share / Non-Rack Rate Share
+
+ถ้า Index <1= Non-Rack มากกว่า Rack (ไม่ดี)
+```
 
 Pain Point 3: OTA ดึงรายได้หายไป 8.7%
 OTA คิดเป็น 33.3% ของการจองทั้งหมด แต่เสียค่า Commission เฉลี่ย 17.6% ต่อการจอง ทำให้สูญเสียรายได้รวมถึง 8.7% ของ Gross Revenue ทั้งหมด
 
+```
+Pain Point 3 - OTA Commission Loss !!!!
+
+Commission Loss = Total Room RevenueOTA X Commission Rate
+
+Commission Loss Rate = (Commission Loss / Gross Revenue) x 100
+
+Net Revenue per Channel = Gross Revenue - Commission Loss
+
+Channel Efficiency = (Net ADRchannel / Gross ADRChannel) x 100
+```
+
 Pain Point 4: ไม่ได้ประโยชน์จากลูกค้าจองกระชั้น
 ลูกค้าที่จองล่วงหน้าน้อยกว่า 7 วัน ให้ ADR ต่ำกว่าลูกค้าที่จองล่วงหน้ามากกว่า 10% ทั้งที่ควรตั้งราคาสูงขึ้นเมื่อห้องเหลือน้อย
+
+```
+Pain Point 4 - Last-Minute Pricing !!!!
+
+Lead Time ADR Gap = ADR31 + days - ADRo-7 days
+
+Pricing Curve Slope = ΔADR / ΔLead Time (days)
+
+ถ้า Slope เป็นบวก = ยิ่งจองล่วงหน้ามาก ADR ยิ่งสูง (ผิดปกติ ควรเป็นลบ)
+```
 
 ### ผลกระทบทางธุรกิจ:
 
