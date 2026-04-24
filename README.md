@@ -331,7 +331,7 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 
 ## 5.7 Prompt ที่ใช้สร้างชุดข้อมูล
 
-```
+
 สร้างชุดข้อมูลการจองโรงแรมที่สมจริงสำหรับโรงแรม ชื่อ "Azure Stay" ข้อมูลต้องเป็นไปตาม schema นี้อย่างเคร่งครัดและต้องสอดคล้องกันภายใน
 
 (Foreign Key ต้องตรงกัน การคำนวณทางการเงินต้องถูกต้อง) สร้างดาต้าเซตบันทึกธุรกรรม 5000 แถว :
@@ -573,7 +573,6 @@ Project-CP372-Azure-Stay/
 │
 │
 └── README.md
-
 
 ---
 
