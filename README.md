@@ -335,6 +335,7 @@ The following columns in `fact_booking` and `dim_hotel_derived_features` are **c
 
 (Foreign Key ต้องตรงกัน การคำนวณทางการเงินต้องถูกต้อง) สร้างดาต้าเซตบันทึกธุรกรรม 5000 แถว :
 
+
 Table 1: fact_bookings (The Transaction Data)
 
 booking_id (PK): Unique ID for the reservation.
@@ -355,6 +356,7 @@ net_room_revenue: (New) gross_room_revenue - commission_amount.
 
 status: Confirmed, Cancelled, Checked-Out.
 
+
 Table 2: dim_calendar
 
 | `Column` | `Type` | `ตัวอย่าง` |
@@ -371,6 +373,7 @@ Table 2: dim_calendar
 
 | `season` | Text| Shoulder |
 
+
 Table 3: dim_channels
 
 | `Column` | `Type` | `ตัวอย่าง` |
@@ -384,6 +387,7 @@ Table 3: dim_channels
 | `channel_type` | Text | Direct |
 
 | `commission_rate` | Number | 0.0 |
+
 
 Table 4: dim_rate_codes
 
@@ -401,6 +405,7 @@ Table 4: dim_rate_codes
 
 | `description` | Text | Standard flexible rate |
 
+
 Table 5: dim_room_inventory
 
 | `Column` | `Type` | `ตัวอย่าง` |
@@ -415,6 +420,7 @@ Table 5: dim_room_inventory
 
 | `rooms_available_for_sale` | Boolean | 116 |
 
+
 Table 6: dim_room_types
 
 | `Column` | `Type` | `ตัวอย่าง` |
@@ -426,29 +432,6 @@ Table 6: dim_room_types
 | `room_type_name` | Text | Standard Queen |
 
 | `base_rate_usd` | Number | 120 |
-
-Table 7:dim_hotel_derived_features
-
-| `Column` | `Type` | `ตัวอย่าง` |
-
-|----------------|------------------|-----------------|
-
-| `booking_id` | Text (PK) | RES-00001 |
-
-| `day_of_week` | Text | Monday |
-
-| `is_weekend` | Boolean | False|
-
-| `is_rack` | Boolean | True |
-
-| `ADR` | Number | 208.0 |
-
-| `net_revenue` | Number | 682.24 |
-
-| `net_ADR` | Number | 170.56 |
-
-| `lead_bin` | Text | 8-14 days |
-```
 
 ---
 
