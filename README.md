@@ -384,7 +384,9 @@ Columns (จำนวนคอลัมน์) : 34"
 > **Note:** ค่า Min ที่ติดลบใน `total_room_revenue`, `ADR`, `net_revenue` และ `net_ADR` คือค่าก่อนทำ Step 4 (Removed negative LOS) — หลังจาก clean แล้วค่าเหล่านี้จะถูกกำจัดออก
 ---
 ## CELL 1 : Hypotheses 1 — ขาย Promo มากเกินไปในวัน High Demand
+
 **กราฟ** :  กราฟ: Grouped Bar Chart สัดส่วน Rack Rate vs Non-Rack Rate แยกตามวันในสัปดาห์ (เรียงจาก Mon ถึง Sun)
+
 • เปรียบเทียบสัดส่วนการขาย Rack Rate และ Non-Rack Rate
     ในแต่ละวันของสัปดาห์
 • วันศุกร์–เสาร์ (High Demand) ควรมีสัดส่วน Rack Rate สูงกว่าวันอื่น
@@ -397,7 +399,9 @@ Columns (จำนวนคอลัมน์) : 34"
 <img width="1187" height="586" alt="image" src="https://github.com/user-attachments/assets/c04c13aa-6b58-48a5-adf0-a01d8aa819ae" />
 
 ## CELL 2 : Hypotheses 2 — OTA ดึงรายได้หายไป 8.7%
+
 **กราฟ :** Grouped Bar Chart — Gross ADR vs Net ADR แต่ละ Channel พร้อมเส้นแสดง Commission Rate
+
 • แสดง ADR ก่อน (Gross) และหลัง (Net) หัก Commission ทุก Channel
 • ช่อง OTA เช่น Booking.com / Expedia มักมี Gross ADR สูง
     แต่พอหัก Commission ~15-18% แล้ว Net ADR อาจต่ำกว่า Direct
@@ -406,15 +410,17 @@ Columns (จำนวนคอลัมน์) : 34"
 **เหตุผลที่เลือก :** Grouped Bar + Secondary Axis (Commission %) ทำให้เห็นทั้ง "มูลค่า"
   และ "ต้นทุน" ในกราฟเดียว — เหมาะสำหรับ Revenue Manager ที่ต้อง
   เปรียบเทียบ Channel Profitability อย่างรวดเร็ว
+  
 <img width="1186" height="588" alt="image" src="https://github.com/user-attachments/assets/b3d80c52-cd1c-4b71-a0d4-1de1aaa0c400" />
 
 ## CELL 3 : Hypotheses 3 — ไม่ได้ประโยชน์จากลูกค้าจองกระชั้น
+
 **กราฟ :** Grouped Bar Chart เปรียบ Rate Mix ระหว่าง Last-Minute (0–7 วัน) กับ Advance (31+ วัน) แยกตาม Rate Name ทั้ง 5 ประเภท
+
 • สิ่งที่น่าสนใจคือ Corporate Negotiated ซึ่งเป็น Rate ที่ให้ราคาต่ำที่สุด กลับถูกจองมากที่สุดในกลุ่ม Last-Minute (21.8%) ขณะที่ Advance อยู่แค่ 17.7% และ Rack Rate ของ Last-Minute ก็ต่ำกว่า Advance ด้วย (20.7% vs 21.4%)
 พูดง่ายๆ คือคนจองกระชั้นได้ Rate ถูกกว่า ทำให้ ADR ต่ำกว่าคนจองล่วงหน้าถึง ฿12.7/คืน ทั้งที่ช่วงนี้โรงแรมควรขายราคาสูงกว่าได้
 
 **เหตุผลที่เลือก :** การตัดเหลือแค่ 2 กลุ่ม (Last-Minute vs Advance) ทำให้เปรียบเทียบได้ชัดโดยไม่ต้องกวาดตาหลายที่ ADR ของแต่ละกลุ่มอยู่ใน Legend เลย ทำให้เชื่อม "ผล" กับ "สาเหตุ" ได้ในกราฟเดียวโดยไม่ต้องอ่าน 2 กราฟพร้อมกัน
-
 
 <img width="1189" height="589" alt="image" src="https://github.com/user-attachments/assets/90bcea9a-9a1a-42af-a0a6-ae8189c28397" />
 
