@@ -512,38 +512,33 @@ Columns: 29 คอลัมน์"
 ## 7. Findings (Insights)
 
 ### 1. Peak Demand ยังถูกกัดด้วย Non-Rack Rate
-วันศุกร์–เสาร์มี Non-Rack Rate ~31% ซึ่งไม่ต่างจาก Weekday อย่างมีนัยสำคัญ แสดงว่า Rate Restriction Policy สำหรับ Peak Period ยังขาดอยู่ การปิดโปรโมชันในช่วงดังกล่าวสามารถเพิ่ม ADR ได้ทันทีโดยไม่กระทบ Occupancy
+วันหยุดขายโปรโมชันเยอะเกินไป Weekend ที่ควรขายราคาเต็ม แต่ยังมีส่วนลดอยู่ถึง 79.6% ทั้งที่ต่างจากวันธรรมดา (78.6%) แทบไม่เลย ถ้าปิดโปรโมชันวันศุกร์–เสาร์ได้ ADR จะเพิ่มขึ้นทันที ฿23/คืน
 
-### 2. Non-Rack Rate คิดเป็น 61.9% ของยอดจอง — Revenue Dilution ระดับ Portfolio
-ปัญหาไม่ใช่แค่วันหยุดสุดสัปดาห์ แต่เป็น Structural Issue ทั้ง Portfolio ควร Review Rate Availability ในทุก Segment และตั้ง Minimum Rack Rate Contribution เป้าหมายไว้ที่ ≥50%่
+### 2. Non-Rack Rate มากเกินไป
+ราคาเต็มขายได้แค่ 21% ของทั้งโรงแรม ไม่ใช่แค่วันหยุด แต่ทุกวันทั้งโรงแรมปล่อยส่วนลดมากเกินไป Rack Rate มีแค่ 21.1% Non-Rack คิดเป็น 78.9% ของยอดจองทั้งหมด
 
-### 3. OTA สร้าง Volume แต่ Net ADR ต่ำกว่า Direct เฉลี่ย ~15–18%
-Booking.com และ Expedia นำส่งยอดจองสูงสุด แต่ Net ADR หลังหัก Commission ต่ำกว่า Direct Web — ควรลงทุนใน Direct Channel (Loyalty Program, Website Rate Parity) เพื่อ Shift 10–15% ของ OTA Booking มาเป็น Direct
+### 3. OTA สร้าง Volume แต่ Net ADR ต่ำกว่า Direct ฿28/คืน OTA คิดเป็น 33.8%
+OTA ช่วยให้มีคนจองเยอะ แต่รายได้จริงหายไป ฿175,424/ปี OTA คิดเป็น 33.8% ของการจองทั้งหมด แต่พอหัก Commission 17.5% ออกแล้ว ได้เงินจริงต่ำกว่าจอง Direct ถึง ฿24/คืน
 
-### 4. Last-Minute Pricing ไม่สะท้อน Scarcity — ADR ต่ำกว่าที่ควร
-ลูกค้าที่จองใน 7 วันสุดท้ายได้ ADR ต่ำกว่ากลุ่มจองล่วงหน้า 8–14 วัน ซึ่งตรงข้ามกับ Dynamic Pricing Principle ควรตั้ง Last-Minute Rate Rule ที่ปรับราคาขึ้นอัตโนมัติเมื่อ Occupancy เกิน 70% และ Booking Window น้อยกว่า 7 วัน
+### 4. Last-Minute Pricing
+ยิ่งจองกระชั้น ยิ่งได้ราคาถูก — ซึ่งผิดปกติคนจองกระชั้นภายใน 7 วัน ได้ ADR ฿152.8 ถูกกว่าคนจองล่วงหน้า 31+ วัน (฿165.5) อยู่ ฿12.7/คืน ทั้งที่ห้องเหลือน้อย ราคาควรแพงขึ้น ไม่ใช่ถูกลง
 
 ---
 
 ## 8. Recommendations
 
 ### 1.ปิด Promo วัน Fri–Sat
-Weekend มี Non-Rack Rate 79.6% ไม่ต่างจาก Weekday (78.6%) เลย → ตั้ง Rate Restriction ปิด Seasonal Promo & AAA Discount
-ทุกวันศุกร์–เสาร์ เปิดขายเฉพาะ Rack / Non-Refundable / Corporate แทน
-ADR Gap Rack vs Non-Rack = ฿23/คืน — Convert ได้ 30% เพิ่ม Revenue ได้ทันที
+ปิดโปรโมชันวันศุกร์–เสาร์ เปิดขายเฉพาะราคาเต็ม (Rack) และ Non-Refundable แทน ไม่ต้องลด AAA หรือ Seasonal Promo ในวันที่คนอยากจองอยู่แล้ว ได้คืน ADR ฿23/คืน/ห้องทันที
 
 ### 2.ดัน Direct ลด OTA
-OTA คิดเป็น 33.8% ของจองทั้งหมด เสีย Commission ฿279,239 (9.5% ของ Gross Revenue) ทั้งที่ Direct Website & Walk-in ให้ Net ADR
-สูงกว่า OTA อยู่ ฿20–28/คืน → ทำ Best Rate Guarantee + ลงทุน Google Hotel Ads
-เป้าหมาย: Shift OTA → Direct 10% ภายใน 6 เดือน ประหยัด Commission ได้ ฿27,000+/ปี
+ดึงลูกค้าให้จอง Direct แทน OTA ทำ Best Rate Guarantee + ลงทุน Google Hotel Ads เพื่อให้คนจองตรงกับโรงแรมแทนการจองผ่าน OTA เป้าหมาย Shift 10% ภายใน 6 เดือน ประหยัด Commission ได้ ฿17,500+/ปี
 
 ### 3.Last-Minute Premium Pricing
-จอง 0–7 วัน ได้ ADR ฿152.8 ต่ำกว่าจอง 31+ วัน (฿165.5) อยู่ ฿12.7 — ผิดหลัก Dynamic Pricing → ตั้ง Rule ปิด Discount Rate อัตโนมัติเมื่อ
-Booking Window ≤7 วัน และ Auto-close เมื่อ Occupancy เกิน 70%
+ตั้งราคาให้แพงขึ้นเมื่อห้องเหลือน้อย ปิดส่วนลดอัตโนมัติเมื่อ Booking Window ≤7 วัน หรือ Occupancy เกิน 70% เป้าหมายดัน ADR Last-minute จาก ฿152.8 → ฿170+ คือให้แพงกว่าคนจองล่วงหน้าด้วยซ้ำ
 
 ### 4.Cancellation Policy แบบ Tiered
-Non-Refundable มีแค่ 19.7% ทั้งที่ให้รายได้มั่นคงที่สุด → ปรับ Policy ตาม Lead Time: 30+ วัน → Non-Refundable ลด 5% (จูงใจ Lock-in)
-8–14 วัน → Refund 50% ถ้า Cancel ก่อน 72 ชม. ≤7 วัน → Non-Refundable 100% เสมอ
+ปรับ Cancellation Policy ตามระยะเวลาที่จอง จองไกล 30+ วัน → Non-Refundable แต่ลด 5% เป็นแรงจูงใจ จอง 8–14 วัน → Refund ได้ 50% ถ้า Cancel ก่อน 72 ชม.
+จองกระชั้น ≤7 วัน → Non-Refundable 100% เสมอ เป้าหมายเพิ่ม Non-Refundable จาก 19.7% → 35% เพื่อให้รายได้มั่นคงขึ้น
 
 ---
 
