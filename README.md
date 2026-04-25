@@ -246,7 +246,7 @@ Revenue Improvement
 สร้างชุดข้อมูลการจองโรงแรมที่สมจริงสำหรับโรงแรม 4 ดาวชื่อ "Azure Stay"  
 ข้อมูลต้องเป็นไปตาม schema นี้อย่างเคร่งครัด  และต้องสอดคล้องกันภายใน (Foreign Key ต้องตรงกัน การคำนวณทางการเงินต้องถูกต้อง) 5300 Rows:
 
-TABLE 1: fact_bookings: 
+**TABLE 1: fact_bookings:** 
 
 booking_id (PK): RES-00001, RES-00002, ...
 
@@ -276,7 +276,7 @@ BLT_days: 4–49 วัน (จองล่วงหน้า)
 
 status: Confirmed, Checked-Out, Cancelled, No-Show
 
-TABLE 2: dim_calendar: 
+**TABLE 2: dim_calendar:** 
 
 date_key (PK): วันที่ทุกวัน(ปี 2025)
 
@@ -292,7 +292,7 @@ is_holiday: False (ทั้งหมด)
 
 season: Low, Shoulder, High
 
-TABLE 3: dim_channels
+**TABLE 3: dim_channels**
 
 channel_id (PK): CH_BKG, CH_CORP, CH_EXP, CH_GDS, CH_WALK, CH_WEB
 
@@ -302,7 +302,7 @@ channel_type: OTA, Wholesale, GDS, Direct
 
 commission_rate: 0% – 18%
 
-TABLE 4: dim_rate_codes
+**TABLE 4: dim_rate_codes**
 
 rate_code_id (PK): RC_RACK, RC_AAA, RC_NRF, RC_SEAS, RC_CORP
 
@@ -316,7 +316,7 @@ is_commissionable: True (ทั้งหมด)
 
 description: คำอธิบาย rate แต่ละประเภท
 
-TABLE 5: dim_room_inventory
+**TABLE 5: dim_room_inventory**
 
 date (PK): วันที่รายวัน
 
@@ -328,7 +328,7 @@ rooms_out_of_order: 0–6 ห้อง
 
 rooms_available_for_sale: 114–120 ห้อง
 
-TABLE 6: dim_room_types
+**TABLE 6: dim_room_types**
 
 room_type_id (PK): RT_ACC, RT_DLX_KG, RT_OCEAN, RT_STD_QN, RT_SUIT
 
@@ -342,7 +342,7 @@ max_occupancy: 2–6 คน
 
 floor_range: ชั้น 1, 1–3, 4–6, 5–7, 7
 
-TABLE 7: dim_segments
+**TABLE 7: dim_segments**
 
 segment_id (PK): Business, Leisure, Wholesale, Transient, Group
 
