@@ -173,7 +173,7 @@ Revenue Improvement
 |--------|-----------|-------------|---------|
 | channel_id | Nominal (String) | รหัสช่องทาง (Primary Key) | CH_WEB |
 | channel_name | Nominal (String) | ชื่อช่องทาง | Direct Website |
-| channel_type | Nominal (String) | ประเภทช่องทาง | Direct |
+| channel_type | Nominal (String) | ประเภทช่องทาง | Direct, OTA |
 | commission_rate | Ratio (Continuous) | อัตราค่าคอมมิชชั่น | 0.0 |
 
 #### dim_rate_codes
