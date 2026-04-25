@@ -245,8 +245,8 @@ Revenue Improvement
 
 ## 6. EDA & Visualizations
 ### Data Overview
-"Rows: 5318 แถว
-Columns: 29 คอลัมน์"
+" Rows (จำนวนแถว): 5,318
+Columns (จำนวนคอลัมน์): 34 "
 ### Data Quality Check
 
 | # | Step | Description | Column Stats |
