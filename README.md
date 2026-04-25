@@ -528,8 +528,11 @@ OTA ช่วยให้มีคนจองเยอะ แต่รายไ
 
 ---
 
+
+# 9. โครงสร้างโปรเจกต์
+
 ```
-# 8. โครงสร้างโปรเจกต์
+
 
 Project-CP372-Azure-Stay/
 │
@@ -559,7 +562,7 @@ Project-CP372-Azure-Stay/
 
 ---
 
-# 9. วิธีรันโปรแกรม
+# 10. วิธีรันโปรแกรม
 
 ## Google Colab (แนะนำ)
 1. ไปที่ https://github.com/ThanaphonUnsap/Project-CP372-Azure-Stay/tree/main
