@@ -448,50 +448,46 @@ Last-Minute booking (≤7 วัน) มี ADR ฿152.8 ต่ำกว่า A
 ## 8. Recommendations
 
 ### 1.ปิด Promo วัน Fri–Sat
-ปิดโปรโมชันวันศุกร์–เสาร์ เปิดขายเฉพาะราคาเต็ม (Rack) และ Non-Refundable แทน ไม่ต้องลด AAA หรือ Seasonal Promo ในวันที่คนอยากจองอยู่แล้ว ได้คืน ADR ฿23/คืน ทันทีและ Non-Rack ลดจาก 78.9% --> 72.0%
+ปิดโปรโมชันวันศุกร์–เสาร์ + ดันสัดส่วน Rack Rate ขึ้น เปิดขายเฉพาะราคาเต็ม (Rack) และ Non-Refundable วัน Fri–Sat ไม่ต้องลด AAA หรือ Seasonal Promo ในวันที่คนอยากจองอยู่แล้ว 
+ควบคู่กับการลดการปล่อย Non-Rack Rate ในทุกวัน เป้าหมาย: ได้คืน ADR ฿23/คืน และ Non-Rack ลดจาก 78.9% → 72.0%
 
 ### 2.ดัน Direct ลด OTA
-ดึงลูกค้าให้จอง Direct แทน OTA ทำ Best Rate Guarantee + ลงทุน Google Hotel Ads เพื่อให้คนจองตรงกับโรงแรมแทนการจองผ่าน OTA เป้าหมาย Shift 10% ภายใน 6 เดือน ประหยัด Commission ได้ ฿17,500+/ปี
+ดึงการจอง Direct แทน OTA ทำให้คนรู้ว่าจองตรงกับโรงแรมได้ราคาดีที่สุด แล้วลงทุนโฆษณาบน Google Hotel Ads 
+เพื่อให้คนเห็นโรงแรมก่อนตัดสินใจจองผ่านช่องทางอื่น OTA เป้าหมาย Shift 10% ประหยัด Commission ได้ ฿17,500+/ปี
 
-### 3.Last-Minute Premium Pricing
-ตั้งราคาให้แพงขึ้นเมื่อห้องเหลือน้อย ปิดส่วนลดอัตโนมัติเมื่อ Booking Window ≤7 วัน หรือ Occupancy เกิน 70% เป้าหมายดัน ADR Last-minute จาก ฿152.8 → ฿170+ คือให้แพงกว่าคนจองล่วงหน้าด้วยซ้ำ
-
-### 4.Cancellation Policy แบบ Tiered
-ปรับ Cancellation Policy ตามระยะเวลาที่จอง จองไกล 30+ วัน → Non-Refundable แต่ลด 5% เป็นแรงจูงใจ จอง 8–14 วัน → Refund ได้ 50% ถ้า Cancel ก่อน 72 ชม.
-จองกระชั้น ≤7 วัน → Non-Refundable 100% เสมอ เป้าหมายเพิ่ม Non-Refundable จาก 19.7% → 35% เพื่อให้รายได้มั่นคงขึ้น
+### 3.ปิด Corporate Negotiated และ Promo Rate เมื่อ Booking Window ≤7 วัน
+ปิด Corporate Negotiated และ Promo Rate เมื่อ Booking Window ≤7 วัน
+เมื่อ Check-in ใกล้ถึง ให้เปิดจองได้เฉพาะ Rack Rate และ Non-Refundable เท่านั้น ป้องกันไม่ให้ Corporate Rate มาครอง Last-Minute เป้าหมาย Rack Rate ของ Last-Minute จาก 20.7% → 40%+ และ ADR จาก ฿152.8 → ฿165+
 
 ---
-
 
 # 9. โครงสร้างโปรเจกต์
 
 ```
-
 
 Project-CP372-Azure-Stay/
 │
 ├── data/
 │   ├── dim_calendar.xlsx
 │   ├── dim_channels.xlsx
-│   ├── dim_hotel_derived_features.csv
+│   ├── dim_segments.xlsx
 │   └── dim_rate_codes.xlsx
 │   └── dim_room_inventory.xlsx
 │   └── dim_room_types.xlsx
-│   └── hotel_Finished_dataset.xlsx
-│   └── hotel_processed_data.csv.xlsx
+│   └── fact_booking.xlsx
+│   └── Hotel_Azure_Stay_Dataset_Finished.xlsx
 │  
 ├── notebook/
-│   └── Project_Azure_Stay.ipynb
+│   └── Project_Azure_Stay_Final.ipynb
 │
 ├── images/
-│   ├── Bar Chart + Scatter Plot.png
-│   ├── Bubble Chart.png
-│   ├── Donut Chart.png
-│   ├── Grouped Bar Chart 2.png
-│   ├── Grouped Bar Chart.png
+│   ├── Grouped Bar Char 1.png
+│   ├── Grouped Bar Char 2.png
+│   ├── Grouped Bar Char 3.png
 │
 │
 └── README.md
+
 ```
 
 ---
