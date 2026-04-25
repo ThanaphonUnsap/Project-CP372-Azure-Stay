@@ -117,310 +117,131 @@ Revenue Improvement
 
 ---
 
-# Section 3: Data Execution & EDA
+## Section 3: Data Execution & EDA
 
-## 5. AI Data Quality 
+### 5. AI Data Quality
 
-โปรเจคนี้ใช้โครงสร้างแบบ Star Schema โดยมีตาราง fact เป็นศูนย์กลาง และ dimension tables สำหรับการวิเคราะห์เชิงธุรกิจ
+โปรเจคนี้ใช้โครงสร้างแบบ Star Schema โดยมีความ fact เป็นศูนย์กลาง และ dimension tables สำหรับการวิเคราะห์ข้อมูลโรงแรม
 
----
+### 5.1 Entity Relationship Overview
 
-## 5.1 Entity Relationship Overview
+ระบบฐานข้อมูลประกอบด้วย:
+- **Fact Table**: `fact_bookings` - ข้อมูลการจองหลัก
+- **Dimension Tables**: ข้อมูลอ้างอิงสำหรับการวิเคราะห์
 
+### 5.2 Fact Table
 
----
-
-## 5.2 Fact Table
-
-### `fact_booking`
-
-The central fact table containing one row per booking record (5,318 rows).
+#### fact_bookings
+ตารางข้อมูลหลักที่เก็บข้อมูลการจองแต่ละรายการ (5,322 แถว)
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `booking_id` | Nominal (String) | Unique booking identifier **(Primary Key)** | `RES-00001` |
-| `booking_date` | Interval (Date) | Date the booking was created | `2025-08-22` |
-| `check_in_date` | Interval (Date) | Scheduled check-in date | `2025-09-01` |
-| `check_out_date` | Interval (Date) | Scheduled check-out date | `2025-09-09` |
-| `room_type_id` | Nominal (String) | Foreign key → `dim_room_types` | `RT_DLX_KG` |
-| `room_type_name` | Nominal (String) | Human-readable room type name | `Deluxe King` |
-| `base_price` | Ratio (Continuous) | Base nightly room price in USD before discount | `170` |
-| `commission_rate` | Ratio (Continuous) | Channel commission rate (0–1) | `0.18` |
-| `rate_code_id` | Nominal (String) | Foreign key → `dim_rate_codes` | `RC_RACK` |
-| `rate_name` | Nominal (String) | Human-readable rate plan name | `Rack Rate` |
-| `discount_factor` | Ratio (Continuous) | Discount multiplier applied to base price (0–1) | `1.0` |
-| `channel_id` | Nominal (String) | Foreign key → `dim_channels` | `CH_WEB` |
-| `channel_name` | Nominal (String) | Human-readable channel name | `Direct Website` |
-| `channel_type` | Nominal (String) | Channel category | `Direct`, `OTA`, `GDS`, `Wholesale` |
-| `segment_id` | Nominal (String) | Guest market segment | `Business`, `Leisure`, `Wholesale`, `Transient`, `Group` |
-| `status` | Nominal (String) | Current booking status | `Confirmed`, `Checked-Out`, `Cancelled`, `No-Show` |
-| `total_room_revenue` | Ratio (Continuous) | Total revenue for the booking in USD | `832.00` |
-| `number_of_rooms` | Ratio (Discrete) | Number of rooms in the booking | `1`, `2`, `3` |
-| `adults_count` | Ratio (Discrete) | Number of adult guests | `1`–`5` |
-| `children_count` | Ratio (Discrete) | Number of child guests | `0`–`4` |
-| `LOS_nights` | Ratio (Discrete) | Length of stay in nights | `2`–`14` |
-| `BLT_days` | Ratio (Discrete) | Booking lead time in days (days between booking and check-in) | `0`–`49+` |
-| `day_of_week` | Nominal (String) | Day of the week for check-in date | `Monday`–`Sunday` |
-| `is_weekend` | Binary (Boolean) | Whether check-in falls on a weekend (Sat–Sun) | `True`, `False` |
-| `is_rack` | Binary (Boolean) | Whether booking is at rack rate (`RC_RACK`) | `True`, `False` |
-| `ADR` | Ratio (Continuous) | Average Daily Rate = `total_room_revenue / LOS_nights / number_of_rooms` | `208.00` |
-| `net_revenue` | Ratio (Continuous) | Revenue after deducting channel commission | `682.24` |
-| `net_ADR` | Ratio (Continuous) | Net ADR after commission | `170.56` |
-| `lead_bin` | Ordinal (String) | Bucketed booking lead time | `0–7 days`, `8–14 days`, `15–30 days`, `31+ days` |
+| booking_id | Nominal (String) | รหัสการจองที่ไม่ซ้ำกัน (Primary Key) | RES-00001 |
+| booking_date | Interval (Date) | วันที่ทำการจอง | 2025-08-22 |
+| check_in_date | Interval (Date) | วันที่เช็คอิน | 2025-09-01 |
+| check_out_date | Interval (Date) | วันที่เช็คเอาท์ | 2025-09-09 |
+| room_type_id | Nominal (String) | Foreign key → dim_room_types | RT_DLX_KG |
+| channel_id | Nominal (String) | Foreign key → dim_channels | CH_WEB |
+| rate_code_id | Nominal (String) | Foreign key → dim_rate_codes | RC_RACK |
+| segment_id | Nominal (String) | ประเภทลูกค้า | Business |
+| number_of_rooms | Ratio (Continuous) | จำนวนห้องที่จอง | 1.0 |
+| adults_count | Ratio (Continuous) | จำนวนผู้ใหญ่ | 2.0 |
+| children_count | Ratio (Continuous) | จำนวนเด็ก | 1.0 |
+| LOS_nights | Ratio (Continuous) | จำนวนคืนที่พัก (Length of Stay) | 8.0 |
+| BLT_days | Ratio (Continuous) | จำนวนวันล่วงหน้าที่จอง (Book Lead Time) | 10.0 |
+| status | Nominal (String) | สถานะการจอง | Confirmed |
 
----
+### 5.3 Dimension Tables
 
-## 5.3 Dimension Tables
-
-### `dim_room_types`
-
-Lookup table for hotel room categories (5 rows).
+#### dim_calendar
+ตารางข้อมูลวันที่สำหรับการวิเคราะห์ตามเวลา
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `room_type_id` | Nominal (String) | Unique room type identifier **(Primary Key)** | `RT_DLX_KG` |
-| `room_type_name` | Nominal (String) | Human-readable room type name | `Deluxe King` |
-| `base_rate_usd` | Ratio (Continuous) | Base nightly rate in USD | `170` |
+| date_key | Interval (Date) | วันที่ (Primary Key) | 2025-01-12 |
+| day_name | Nominal (String) | ชื่อวัน | Sunday |
+| month_name | Nominal (String) | ชื่อเดือน | January |
+| quarter | Nominal (String) | ไตรมาส | Q1 |
+| is_weekend | Nominal (Boolean) | วันหยุดสุดสัปดาห์ | true |
+| is_holiday | Nominal (Boolean) | วันหยุดนักขัตฤกษ์ | false |
+| season | Nominal (String) | ฤดูกาล | Low |
 
-**Available room types:**
-
-| `room_type_id` | `room_type_name` | `base_rate_usd` |
-|----------------|------------------|-----------------|
-| `RT_STD_QN` | Standard Queen | $120 |
-| `RT_DLX_KG` | Deluxe King | $170 |
-| `RT_SUIT` | Suite | $260 |
-| `RT_OCEAN` | Ocean View | $210 |
-| `RT_ACC` | Accessible | $130 |
-
----
-
-### `dim_rate_codes`
-
-Lookup table for rate plans and pricing strategies (5 rows).
+#### dim_channels
+ตารางข้อมูลช่องทางการจอง
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `rate_code_id` | Nominal (String) | Unique rate code identifier **(Primary Key)** | `RC_RACK` |
-| `rate_name` | Nominal (String) | Human-readable rate plan name | `Rack Rate` |
-| `discount_factor` | Ratio (Continuous) | Price multiplier applied to base rate (0–1) | `0.85` |
-| `is_commissionable` | Binary (Boolean) | Whether a channel commission is applied | `1` = Yes, `0` = No |
-| `description` | Nominal (String) | Brief description of the rate plan | `Corporate negotiated rate.` |
+| channel_id | Nominal (String) | รหัสช่องทาง (Primary Key) | CH_WEB |
+| channel_name | Nominal (String) | ชื่อช่องทาง | Direct Website |
+| channel_type | Nominal (String) | ประเภทช่องทาง | Direct |
+| commission_rate | Ratio (Continuous) | อัตราค่าคอมมิชชั่น | 0.0 |
 
-**Available rate codes:**
-
-| `rate_code_id` | `rate_name` | `discount_factor` | `is_commissionable` |
-|----------------|-------------|-------------------|----------------------|
-| `RC_RACK` | Rack Rate | 1.00 | Yes |
-| `RC_AAA` | AAA Discount | 0.90 | Yes |
-| `RC_CORP` | Corporate Negotiated | 0.85 | No |
-| `RC_NRF` | Non-Refundable | 0.80 | Yes |
-| `RC_SEAS` | Seasonal Promo | 0.88 | Yes |
-
----
-
-### `dim_channels`
-Lookup table for booking distribution channels (6 rows).
+#### dim_rate_codes
+ตารางข้อมูลรหัสอัตรา
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `channel_id` | Nominal (String) | Unique channel identifier **(Primary Key)** | `CH_WEB` |
-| `channel_name` | Nominal (String) | Human-readable channel name | `Direct Website` |
-| `channel_type` | Nominal (String) | Broad channel category | `Direct`, `OTA`, `GDS`, `Wholesale` |
-| `commission_rate` | Ratio (Continuous) | Commission rate charged by this channel (0–1) | `0.18` |
+| rate_code_id | Nominal (String) | รหัสอัตรา (Primary Key) | RC_RACK |
+| rate_name | Nominal (String) | ชื่ออัตรา | Rack Rate |
+| discount_factor | Ratio (Continuous) | ตัวคูณส่วนลด | 1.0 |
+| is_rack | Nominal (Boolean) | เป็นอัตราพื้นฐานหรือไม่ | true |
+| is_commissionable | Nominal (Boolean) | มีค่าคอมมิชชั่นหรือไม่ | true |
+| description | Nominal (String) | รายละเอียดอัตรา | Standard flexible rate |
 
-**Available channels:**
-
-| `channel_id` | `channel_name` | `channel_type` | `commission_rate` |
-|--------------|----------------|----------------|-------------------|
-| `CH_WEB` | Direct Website | Direct | 0.00 |
-| `CH_WALK` | Walk-in | Direct | 0.00 |
-| `CH_EXP` | Expedia | OTA | 0.18 |
-| `CH_BKG` | Booking.com | OTA | 0.17 |
-| `CH_GDS` | GDS | GDS | 0.12 |
-| `CH_CORP` | Corporate Agent | Wholesale | 0.10 |
-
----
-
-### `dim_calendar`
-
-Date dimension covering the full analysis period (61 rows: Sep 1 – Oct 31, 2025).
+#### dim_room_types
+ตารางข้อมูลประเภทห้อง
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `date_key` | Interval (Date) | Calendar date **(Primary Key)** | `2025-09-15` |
-| `day_name` | Nominal (String) | Name of the day of the week | `Monday` |
-| `is_weekend` | Binary (Boolean) | Whether the date is a Saturday or Sunday | `True`, `False` |
-| `is_holiday` | Binary (Boolean) | Whether the date is a public holiday | `True`, `False` |
-| `season` | Ordinal (String) | Demand season classification | `High`, `Shoulder` |
+| room_type_id | Nominal (String) | รหัสประเภทห้อง (Primary Key) | RT_DLX_KG |
+| room_type_name | Nominal (String) | ชื่อประเภทห้อง | Deluxe King |
+| base_rate_thb | Ratio (Continuous) | ราคาพื้นฐานต่อคืน (THB) | 170.0 |
+| bed_type | Nominal (String) | ประเภทเตียง | King |
+| max_occupancy | Ratio (Continuous) | จำนวนผู้เข้าพักสูงสุด | 3.0 |
+| floor_range | Nominal (String) | ช่วงชั้นห้อง | 4–6 |
 
----
-
-### `dim_room_inventory`
-
-Daily room inventory table at the hotel level (61 rows: Sep 1 – Oct 31, 2025).
+#### dim_room_inventory
+ตารางข้อมูลสถานะห้องพัก
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `date` | Interval (Date) | Calendar date **(Primary Key)** | `2025-09-01` |
-| `total_capacity` | Ratio (Discrete) | Total number of rooms in the hotel | `120` |
-| `rooms_out_of_order` | Ratio (Discrete) | Rooms that are closed for maintenance or unavailable for sale | `0`–`12` |
-| `rooms_available_for_sale` | Ratio (Discrete) | Rooms ready to be sold = `total_capacity − rooms_out_of_order` | `116` |
+| date | Interval (Date) | วันที่ (Primary Key) | 2025-01-12 |
+| total_capacity | Ratio (Continuous) | จำนวนห้องทั้งหมด | 120.0 |
+| rooms_currently_using | Ratio (Continuous) | ห้องที่ใช้งานอยู่ | 0.0 |
+| rooms_out_of_order | Ratio (Continuous) | ห้องที่ปิดซ่อม | 6.0 |
+| rooms_available_for_sale | Ratio (Continuous) | ห้องที่พร้อมขาย | 114.0 |
 
----
-
-## 5.4 Derived Feature Table
-
-### `dim_hotel_derived_features`
-
-Pre-computed feature table derived from `fact_booking`, used for analysis and modeling (5,318 rows — one row per booking).
+#### dim_segments
+ตารางข้อมูลประเภทลูกค้า
 
 | Column | Data Type | Description | Example |
 |--------|-----------|-------------|---------|
-| `booking_id` | Nominal (String) | Foreign key → `fact_booking` **(Primary Key)** | `RES-00001` |
-| `day_of_week` | Nominal (String) | Day of the week for check-in date | `Monday` |
-| `is_weekend` | Binary (Boolean) | Whether check-in falls on a weekend | `True`, `False` |
-| `is_rack` | Binary (Boolean) | Whether the booking uses rack rate (`RC_RACK`) | `True`, `False` |
-| `ADR` | Ratio (Continuous) | Average Daily Rate in USD | `208.00` |
-| `net_revenue` | Ratio (Continuous) | Revenue after deducting channel commission | `682.24` |
-| `net_ADR` | Ratio (Continuous) | Net ADR after commission deduction | `170.56` |
-| `lead_bin` | Ordinal (String) | Bucketed booking lead time | `0–7 days`, `8–14 days`, `15–30 days`, `31+ days` |
+| segment_id | Nominal (String) | รหัสประเภทลูกค้า (Primary Key) | Business |
+| segment_name | Nominal (String) | ชื่อประเภทลูกค้า | Business Traveller |
+| segment_category | Nominal (String) | หมวดหมู่ลูกค้า | Corporate |
+| is_contracted | Nominal (Boolean) | มีสัญญาหรือไม่ | true |
+| price_sensitivity | Nominal (String) | ความไวต่อราคา | High |
+| volume_potential | Nominal (String) | ศักยภาพปริมาณการจอง | Low |
+| typical_channel | Nominal (String) | ช่องทางการจองทั่วไป | Corporate rate / Direct |
+
+### 5.4 Data Quality Assessment
+
+#### Missing Values Analysis
+- **fact_bookings**: มีค่าว่างในคอลัมน์ `segment_id` บางแถว
+- **dim_calendar**: ข้อมูลครบถ้วน ไม่มีค่าว่าง
+- **dimension tables**: ข้อมูลครบถ้วนในทุกตาราง
+
+#### Data Integrity Checks
+- **Primary Keys**: ทุก Primary Key มีค่าไม่ซ้ำกัน
+- **Foreign Keys**: ความสัมพันธ์ระหว่างตารางถูกต้อง
+- **Date Ranges**: ข้อมูลวันที่อยู่ในช่วง 2025-2026 ตามที่คาดหวัง
+
+### 5.5 Business Rules Validation
+- **Check-in/Check-out Logic**: วันเช็คเอาท์มาหลังวันเช็คอิน
+- **Booking Lead Time**: คำนวณจากวันจองถึงวันเช็คอิน
+- **Length of Stay**: คำนวณจากวันเช็คอินถึงวันเช็คเอาท์
+- **Room Capacity**: จำนวนผู้เข้าพักไม่เกิน max_occupancy ของประเภทห้อง
 
----
-
-## 5.5 Key Relationships
-
-```
-fact_booking.room_type_id   → dim_room_types.room_type_id
-fact_booking.rate_code_id   → dim_rate_codes.rate_code_id
-fact_booking.channel_id     → dim_channels.channel_id
-fact_booking.check_in_date  → dim_calendar.date_key
-fact_booking.check_in_date  → dim_room_inventory.date
-fact_booking.booking_id     → dim_hotel_derived_features.booking_id
-```
-
----
-
-## 5.6 Derived / Calculated Columns
-
-The following columns in `fact_booking` and `dim_hotel_derived_features` are **computed columns**, not raw source fields:
-
-| Column | Formula |
-|--------|---------|
-| `total_room_revenue` | `base_price × discount_factor × LOS_nights × number_of_rooms` |
-| `ADR` | `total_room_revenue / LOS_nights / number_of_rooms` |
-| `net_revenue` | `total_room_revenue × (1 − commission_rate)` |
-| `net_ADR` | `net_revenue / LOS_nights / number_of_rooms` |
-| `is_rack` | `True` if `rate_code_id == 'RC_RACK'` else `False` |
-| `rooms_available_for_sale` | `total_capacity − rooms_out_of_order` |
-| `BLT_days` | `check_in_date − booking_date` (in days) |
-| `lead_bin` | Binned from `BLT_days`: 0–7 / 8–14 / 15–30 / 31+ |
-
-## 5.7 Prompt ที่ใช้สร้างชุดข้อมูล
-
-
-สร้างชุดข้อมูลการจองโรงแรมที่สมจริงสำหรับโรงแรม ชื่อ "Azure Stay" ข้อมูลต้องเป็นไปตาม schema นี้อย่างเคร่งครัดและต้องสอดคล้องกันภายใน
-
-(Foreign Key ต้องตรงกัน การคำนวณทางการเงินต้องถูกต้อง) สร้างดาต้าเซตบันทึกธุรกรรม 5000 แถว :
-
-
-Table 1: fact_bookings (The Transaction Data)
-
-booking_id (PK): Unique ID for the reservation.
-
-booking_date: Date the booking was made.
-
-check_in_date: Date of arrival.
-
-channel_id (FK): Links to dim_channels.
-
-rate_code_id (FK): Links to dim_rate_codes.
-
-gross_room_revenue: Total revenue paid by the guest (before commission).
-
-commission_amount: (New) The calculated cost paid to the channel for this specific booking.
-
-net_room_revenue: (New) gross_room_revenue - commission_amount.
-
-status: Confirmed, Cancelled, Checked-Out.
-
-
-Table 2: dim_calendar
-
-| `Column` | `Type` | `ตัวอย่าง` |
-
-|----------------|------------------|-----------------|
-
-| `date_key` | Date (PK) | 2025-09-01 |
-
-| `day_name` | Text | Monday|
-
-| `is_weekend` | Boolean| False |
-
-| `is_holiday` | Boolean | False |
-
-| `season` | Text| Shoulder |
-
-
-Table 3: dim_channels
-
-| `Column` | `Type` | `ตัวอย่าง` |
-
-|----------------|------------------|-----------------|
-
-| `channel_id` | Text (PK) | CH_WEB |
-
-| `channel_name` | Text | Direct Website |
-
-| `channel_type` | Text | Direct |
-
-| `commission_rate` | Number | 0.0 |
-
-
-Table 4: dim_rate_codes
-
-| `Column` | `Type` | `ตัวอย่าง` |
-
-|----------------|------------------|-----------------|
-
-| `rate_code_id` | Text (PK) | RC_RACK |
-
-| `rate_name` | Text | Rack Rate |
-
-| `discount_factor` | Number | 1.0 |
-
-| `is_commissionable` | Boolean | 1 |
-
-| `description` | Text | Standard flexible rate |
-
-
-Table 5: dim_room_inventory
-
-| `Column` | `Type` | `ตัวอย่าง` |
-
-|----------------|------------------|-----------------|
-
-| `date` | date | 2025-09-01 |
-
-| `total_capacity` | Number | 120 |
-
-| `rooms_currently_using` | Number | 4 |
-
-| `rooms_available_for_sale` | Boolean | 116 |
-
-
-Table 6: dim_room_types
-
-| `Column` | `Type` | `ตัวอย่าง` |
-
-|----------------|------------------|-----------------|
-
-| `room_type_id` | Text (PK) | RT_STD_QN |
-
-| `room_type_name` | Text | Standard Queen |
-
-| `base_rate_usd` | Number | 120 |
-
----
 
 ## 6. EDA & Visualizations
 ### Data Overview
