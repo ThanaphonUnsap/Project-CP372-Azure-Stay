@@ -212,19 +212,6 @@ Revenue Improvement
 | rooms_out_of_order | Ratio (Continuous) | ห้องที่ปิดซ่อม | 6.0 |
 | rooms_available_for_sale | Ratio (Continuous) | ห้องที่พร้อมขาย | 114.0 |
 
-#### dim_segments
-ตารางข้อมูลประเภทลูกค้า
-
-| Column | Data Type | Description | Example |
-|--------|-----------|-------------|---------|
-| segment_id | Nominal (String) | รหัสประเภทลูกค้า (Primary Key) | Business |
-| segment_name | Nominal (String) | ชื่อประเภทลูกค้า | Business Traveller |
-| segment_category | Nominal (String) | หมวดหมู่ลูกค้า | Corporate |
-| is_contracted | Nominal (Boolean) | มีสัญญาหรือไม่ | true |
-| price_sensitivity | Nominal (String) | ความไวต่อราคา | High |
-| volume_potential | Nominal (String) | ศักยภาพปริมาณการจอง | Low |
-| typical_channel | Nominal (String) | ช่องทางการจองทั่วไป | Corporate rate / Direct |
-
 ### 5.4 Data Quality Assessment
 
 #### Missing Values Analysis
@@ -342,22 +329,6 @@ bed_type: Queen, King
 max_occupancy: 2–6 คน
 
 floor_range: ชั้น 1, 1–3, 4–6, 5–7, 7
-
-**TABLE 7: dim_segments**
-
-segment_id (PK): Business, Leisure, Wholesale, Transient, Group
-
-segment_name: Business Traveller, Leisure Traveller, Wholesale/Agent, Transient, Group Booking
-
-segment_category: Corporate, Retail, Wholesale, Group
-
-is_contracted: True / False
-
-price_sensitivity: Low, Medium, High
-
-volume_potential: Low, Medium, High
-
-typical_channel: OTA, Direct, GDS, Walk-in, Corporate Agent
 
 ---
 
