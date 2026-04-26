@@ -144,7 +144,6 @@ Revenue Improvement
 | room_type_id | Nominal (String) | Foreign key → dim_room_types | RT_DLX_KG |
 | channel_id | Nominal (String) | Foreign key → dim_channels | CH_WEB |
 | rate_code_id | Nominal (String) | Foreign key → dim_rate_codes | RC_RACK |
-| segment_id | Nominal (String) | ประเภทลูกค้า | Business |
 | number_of_rooms | Ratio (Continuous) | จำนวนห้องที่จอง | 1.0 |
 | adults_count | Ratio (Continuous) | จำนวนผู้ใหญ่ | 2.0 |
 | children_count | Ratio (Continuous) | จำนวนเด็ก | 1.0 |
@@ -215,7 +214,6 @@ Revenue Improvement
 ### 5.4 Data Quality Assessment
 
 #### Missing Values Analysis
-- **fact_bookings**: มีค่าว่างในคอลัมน์ `segment_id` บางแถว
 - **dim_calendar**: ข้อมูลครบถ้วน ไม่มีค่าว่าง
 - **dimension tables**: ข้อมูลครบถ้วนในทุกตาราง
 
@@ -249,8 +247,6 @@ room_type_id (FK): RT_DLX_KG, RT_STD_QN, RT_SUIT, RT_OCEAN, RT_ACC
 channel_id (FK): CH_WEB, CH_EXP, CH_BKG, CH_WALK, CH_GDS, CH_CORP
 
 rate_code_id (FK): RC_RACK, RC_AAA, RC_NRF, RC_SEAS, RC_CORP
-
-segment_id: Business, Leisure, Wholesale, Transient, Group
 
 number_of_rooms: 1, 2, 3
 
@@ -441,7 +437,6 @@ Project-CP372-Azure-Stay/
 ├── data/
 │   ├── dim_calendar.xlsx
 │   ├── dim_channels.xlsx
-│   ├── dim_segments.xlsx
 │   └── dim_rate_codes.xlsx
 │   └── dim_room_inventory.xlsx
 │   └── dim_room_types.xlsx
